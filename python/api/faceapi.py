@@ -1,15 +1,14 @@
 import os
 import cv2
-from loguru import logger
 import base64
 import platform
 import numpy as np
-from face_struct import *
+from .face_struct import *
+from loguru import logger
 from easydict import EasyDict
 
-ROOT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+ROOT_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 API_DIR = os.path.join(ROOT_DIR, "build")  # api.py的目录文件夹的绝对路径
-
 platform_name = platform.platform().lower()
 
 if "windows" in platform_name:
@@ -25,7 +24,6 @@ elif "macos" in platform_name:
 else:
     logger.error("unsupported this system")
     exit(-1)
-MODEL_DIR = os.path.join(API_DIR, "model")
 
 # 由于传递int数组比较方便,所以把字符串映射给int
 func_dict = {"FACE_DETECT": 0,
@@ -397,13 +395,13 @@ class SeetaFace(object):
         """
         self._Reset()
 
-    def Detect(self, simage) -> SeetaFaceInfoArray:
+    def Detect(self, image: np.ndarray) -> SeetaFaceInfoArray:
         """
         人脸检测
-        :param frame: 原始图像
+        :param image: 原始图像
         :return: 人脸检测信息数组
         """
-
+        simage = get_seetaImageData_by_numpy(image)
         self.check_init("FACE_DETECT")  # 检验模型是否在输入模型参数中,这里并没有初始化
         return self._Detect(simage)
 
@@ -416,11 +414,11 @@ class SeetaFace(object):
         """
         self._SetProperty(property, value)
 
-    def Predict(self, simage: SeetaImageData, face: SeetaRect,
+    def Predict(self, image: np.ndarray, face: SeetaRect,
                 points: List[SeetaPointF]) -> int:
         """
         单帧rgb活体检测
-        :param simage: 原图的SeetaImageData
+        :param image: 原图的np.ndarray
         :param face: 人脸区域
         :param points:  人脸关键点位置
         :return:  活体检测结果
@@ -429,6 +427,7 @@ class SeetaFace(object):
         2:无法判断（人脸成像质量不好）
         """
         self.check_init("LIVENESS")
+        simage = get_seetaImageData_by_numpy(image)
         islive = self._Predict(simage, face, points)
         return islive
 
@@ -461,14 +460,15 @@ class SeetaFace(object):
         self._GetPreFrameScore(clarity, reality)
         return (clarity.value, reality.value)
 
-    def mark5(self, simage: SeetaImageData, face: SeetaRect) -> List[SeetaPointF]:
+    def mark5(self, image: np.ndarray, face: SeetaRect) -> List[SeetaPointF]:
         """
         给定一张原始图片，和其中人脸区域，返回该人脸区域中5个关键点位置 [左眼，右眼，鼻子，左边嘴角，右边嘴角]
-        :param simage: 原图的SeetaImageData
+        :param image: 原图的np.ndarray
         :param face: 人脸区域位置
         :return:
         """
         self.check_init("LANDMARKER5")
+        simage = get_seetaImageData_by_numpy(image)
         points = (SeetaPointF * 5)()
         self._mark5(simage, face, points)
         return points
@@ -530,14 +530,15 @@ class SeetaFace(object):
         self._ExtractCroppedFace(seetaImageData, feature)
         return feature
 
-    def Extract(self, simage: SeetaImageData, points: List[SeetaPointF]):
+    def Extract(self, image: np.ndarray, points: List[SeetaPointF]):
         """
         在一张图片中提取指定人脸关键点区域的人脸的特征值
-        :param simage: 原图的SeetaImageData
+        :param image: 原图的SeetaImageData
         :param points:
         :return:
         """
         self.check_init("FACE_RECOGNITION")
+        simage = get_seetaImageData_by_numpy(image)
         feature = (c_float * 1024)()
         self._Extract(simage, points, feature)
         return feature
