@@ -3,5 +3,5 @@ model
 __pycache__
 build
 bin
-lib
+build/lib
 .cmake

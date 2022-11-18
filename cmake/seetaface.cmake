@@ -1,6 +1,6 @@
 if (WIN32)
     set(DEP_LIBS_DIR "${CMAKE_CURRENT_SOURCE_DIR}/third/seeta/lib/win")
-    file(GLOB SEETAFACE_LIBS ${DEP_LIBS_DIR}/*.dll)
+    file(GLOB SEETAFACE_LIBS ${DEP_LIBS_DIR}/*.lib)
     set(PLATFORM_DIR win)
 elseif (APPLE)
     set(DEP_LIBS_DIR "${CMAKE_CURRENT_SOURCE_DIR}/third/seeta/lib/mac")
@@ -19,4 +19,7 @@ include_directories(${SEETAFACE_INC_DIR})
 # 添加外部库
 list(APPEND DEPEND_LIBS ${SEETAFACE_LIBS})
 # 拷贝文件
-file(COPY ${SEETAFACE_LIBS} DESTINATION lib/${PLATFORM_DIR} FOLLOW_SYMLINK_CHAIN)
+if(WIN32)
+    file(GLOB SEETAFACE_LIBS ${DEP_LIBS_DIR}/*.dll)
+endif()
+file(COPY ${SEETAFACE_LIBS} DESTINATION ${LIBRARY_OUTPUT_PATH} FOLLOW_SYMLINK_CHAIN)

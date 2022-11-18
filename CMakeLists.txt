@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.12)
-project(SeetaFaceAPI)
-set(LIBRARY_NAME SeetaFaceAPI)
+project(FaceAPI)
+set(LIBRARY_NAME FaceAPI)
 
 
 add_compile_options(-std=c++11 -fpic -O2)
@@ -18,8 +18,6 @@ set(INC_DIR ${CMAKE_CURRENT_SOURCE_DIR})
 
 file(GLOB_RECURSE SRCS ${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp)
 add_library(${LIBRARY_NAME} SHARED ${SRCS})
-# seetaface
-include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/seetaface.cmake)
 # 设置文件输出目录
 if (WIN32)
     add_definitions(-DFACE_LIB)
@@ -31,7 +29,8 @@ elseif (UNIX)
 else ()
     message(FATAL_ERROR "unsupported this system")
 endif ()
-
+# seetaface
+include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/seetaface.cmake)
 
 include_directories(${INC_DIR})
 if (APPLE)
