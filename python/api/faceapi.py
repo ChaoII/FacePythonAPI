@@ -11,6 +11,9 @@ _LIB_HOME = os.path.join(settings.ROOT_DIR, "build")  # api.py的目录文件夹
 _platform_name = platform.platform().lower()
 if settings.USE_GPU:
     # 显示添加cuda搜索路径
+    if settings.CUDA_DIR is None:
+        logger.error("开启GPU情况下请设置好cuda目录")
+        exit(-1)
     os.add_dll_directory(settings.CUDA_DIR)
 
 if "windows" in _platform_name:

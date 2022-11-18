@@ -3,6 +3,14 @@ project(FaceAPI)
 set(LIBRARY_NAME FaceAPI)
 
 option(USE_GPU "" OFF)
+if (USE_GPU)
+    set(CUDA_DIR "")
+    set(USE_GPU true)
+else ()
+    set(USE_GPU false)
+
+endif ()
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/python/config.yml.in ${CMAKE_CURRENT_SOURCE_DIR}/python/config.yml @ONLY)
 
 add_compile_options(-std=c++11 -fpic -O2)
 
