@@ -14,13 +14,13 @@ _platform_name = platform.platform().lower()
 if "windows" in _platform_name:
     LIB_PATH = os.path.join(_LIB_HOME, "lib", "win")
     os.environ["PATH"] += os.pathsep + LIB_PATH
-    dll = CDLL(os.path.join(LIB_PATH, "libFaceAPI.dll"))
+    dll = CDLL(os.path.join(LIB_PATH, "FaceAPI.dll"))
 elif "linux" in _platform_name:
     LIB_PATH = os.path.join(_LIB_HOME, "lib", "linux")
     dll = CDLL(os.path.join(LIB_PATH, "libFaceAPI.so"))
 elif "macos" in _platform_name:
     LIB_PATH = os.path.join(_LIB_HOME, "lib", "mac")
-    dll = CDLL(os.path.join(LIB_PATH, "libSeetaFaceAPI.dylib"))
+    dll = CDLL(os.path.join(LIB_PATH, "libFaceAPI.dylib"))
 else:
     logger.error("unsupported this system")
     exit(-1)
