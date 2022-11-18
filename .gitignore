@@ -5,3 +5,6 @@ build
 bin
 build/lib
 .cmake
+.DS_Store
+python/models/DB.sqlite-shm
+python/models/DB.sqlite-wal
