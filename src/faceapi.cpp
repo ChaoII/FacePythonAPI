@@ -169,67 +169,67 @@ void Init_recognition() {
 int Init(int func) {
     if (func == 0) {
         Init_face();
-        FRINFO << "初始化人脸检测" << endl;
+        FRINFO << "Init_face" << endl;
         return 0;
     } else if (func == 1) {
         Init_land5();
-        FRINFO << "初始化人脸5特征点检测" << endl;
+        FRINFO << "Init_land5" << endl;
         return 0;
     } else if (func == 2) {
         Init_land68();
-        FRINFO << "初始化人脸68特征点检测" << endl;
+        FRINFO << "Init_land68" << endl;
         return 0;
     } else if (func == 3) {
         Init_live(); //成功
-        FRINFO << "初始化活体检测" << endl;
+        FRINFO << "Init_live" << endl;
         return 0;
     } else if (func == 4) {
         Init_faceMask(); //成功
-        FRINFO << "初始化五官遮挡检测" << endl;
+        FRINFO << "Init_faceMask" << endl;
         return 0;
     } else if (func == 5) {
         Init_age(); //成功
-        FRINFO << "初始化年龄评估" << endl;
+        FRINFO << "Init_age" << endl;
         return 0;
     } else if (func == 6) {
         Init_gender(); //成功
-        FRINFO << "初始化性别评估" << endl;
+        FRINFO << "Init_gender" << endl;
         return 0;
     } else if (func == 7) {
         Init_mask(); //成功
-        FRINFO << "初始化口罩检测" << endl;
+        FRINFO << "Init_mask" << endl;
         return 0;
     } else if (func == 8) {
         Init_eyeState(); //成功
-        FRINFO << "初始化眼睛状态检测" << endl;
+        FRINFO << "Init_eyeState" << endl;
         return 0;
     } else if (func == 9) {
         Init_clarity(); //成功
-        FRINFO << "初始化清晰度评估" << endl;
+        FRINFO << "Init_clarity" << endl;
         return 0;
     } else if (func == 10) {
         Init_bright(); //成功
-        FRINFO << "初始化明亮度评估" << endl;
+        FRINFO << "Init_bright" << endl;
         return 0;
     } else if (func == 11) {
         Init_resolution(); //成功
-        FRINFO << "初始化分辨率评估" << endl;
+        FRINFO << "Init_resolution" << endl;
         return 0;
     } else if (func == 12) {
         Init_pose(); //成功
-        FRINFO << "初始化人脸姿态质量评估" << endl;
+        FRINFO << "Init_pose" << endl;
         return 0;
     } else if (func == 13) {
         Init_integrity(); //成功
-        FRINFO << "初始化人脸完整度评估" << endl;
+        FRINFO << "Init_integrity" << endl;
         return 0;
     } else if (func == 14) {
         Init_faceTrack(); //成功
-        FRINFO << "初始化人脸跟踪" << endl;
+        FRINFO << "Init_faceTrack" << endl;
         return 0;
     } else if (func == 15) {
         Init_recognition(); //人脸识别
-        FRINFO << "初始化人脸识别" << endl;
+        FRINFO << "Init_recognition" << endl;
         return 0;
     } else
         return -1;
