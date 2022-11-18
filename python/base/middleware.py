@@ -50,7 +50,7 @@ def register_orm(app: FastAPI):
         app,
         config={
             'connections': {
-                'default': settings.db_url
+                'default': settings.DB_URL
             },
             'apps': {
                 'models': {

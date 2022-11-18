@@ -6,20 +6,20 @@ import numpy as np
 from .face_struct import *
 from loguru import logger
 from easydict import EasyDict
+from base.config import settings
 
-ROOT_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-API_DIR = os.path.join(ROOT_DIR, "build")  # api.py的目录文件夹的绝对路径
-platform_name = platform.platform().lower()
+_LIB_HOME = os.path.join(settings.ROOT_DIR, "build")  # api.py的目录文件夹的绝对路径
+_platform_name = platform.platform().lower()
 
-if "windows" in platform_name:
-    LIB_PATH = os.path.join(API_DIR, "lib", "win")
+if "windows" in _platform_name:
+    LIB_PATH = os.path.join(_LIB_HOME, "lib", "win")
     os.environ["PATH"] += os.pathsep + LIB_PATH
     dll = CDLL(os.path.join(LIB_PATH, "libFaceAPI.dll"))
-elif "linux" in platform_name:
-    LIB_PATH = os.path.join(API_DIR, "lib", "linux")
+elif "linux" in _platform_name:
+    LIB_PATH = os.path.join(_LIB_HOME, "lib", "linux")
     dll = CDLL(os.path.join(LIB_PATH, "libFaceAPI.so"))
-elif "macos" in platform_name:
-    LIB_PATH = os.path.join(API_DIR, "lib", "mac")
+elif "macos" in _platform_name:
+    LIB_PATH = os.path.join(_LIB_HOME, "lib", "mac")
     dll = CDLL(os.path.join(LIB_PATH, "libSeetaFaceAPI.dylib"))
 else:
     logger.error("unsupported this system")

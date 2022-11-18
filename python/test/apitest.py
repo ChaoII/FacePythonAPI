@@ -1,5 +1,10 @@
 import requests
-from utils import *
+import os, sys
+import cv2
+from pathlib import Path
+
+sys.path.append(str(Path(__file__).resolve().parent.parent))
+from base.utils import *
 
 
 def test_register_face_api(id_, name, img):
@@ -25,7 +30,7 @@ def test_delete_face(id_: str):
 
 
 def test_face_recognize(imgpath):
-    url = "http://192.168.1.149:9026/face_recognize"
+    url = "http://127.0.0.1:9026/face_recognize"
     img = cv2.imread(imgpath)
     image = image_to_base64(img)
     data = {"imageBase64": image}
@@ -50,6 +55,6 @@ if __name__ == '__main__':
     # test_register_face_api('04', '佟大为', './asserts/tongdawei.jpg')
     # test_register_face_api('06', '奥沫沫', './asserts/oumei.jpg')
 
-    test_face_recognize('./asserts/123.jpg')
+    test_face_recognize('../../images/123.jpg')
     # test_delete_face('04')
     # test_get_face_library('04')

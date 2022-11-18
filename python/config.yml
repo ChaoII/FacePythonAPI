@@ -9,15 +9,16 @@ base:
   allow_methods:
     - "*"
   allow_headers:
-    - "*"`````
+    - "*"
   port: 9026
+  workers: 1
 
 face:
   rec_threshold: 0.7
   is_anti_spoof: false
   use_gpu: false
   gpu_id: 0
-  tracking_resolution: [ 310,310 ]
+  tracking_size: [ 310,310 ]
   functions:
     # all data in ["FACE_DETECT","LANDMARKER5","LIVENESS","LANDMARKER_MASK","FACE_AGE",
     #  "FACE_GENDER","FACE_RECOGNITION","MOUTH_MASK","EYE_STATE","FACE_CLARITY",
@@ -32,4 +33,3 @@ face:
     - "FACE_RESOLUTION"
     - "FACE_INTEGRITY"
   allow_images: [ "jpg", "jpeg", "png", "bmp" ]
-  workers: 1

@@ -1,7 +1,7 @@
 from face import *
 from typing import Optional
 from base.config import settings
-from utils import base64_to_image
+from base.utils import base64_to_image
 from fastapi import FastAPI, Body
 from base.db import do_stuff, init
 from fastapi.staticfiles import StaticFiles
@@ -87,4 +87,4 @@ async def get_face_library(request: Request, uid: Optional[str] = Body(None, emb
 if __name__ == "__main__":
     import uvicorn
 
-    uvicorn.run(app, host="0.0.0.0", port=9026, workers=1)
+    uvicorn.run(app, host="0.0.0.0", port=settings.PORT, workers=settings.WORKERS)

@@ -12,7 +12,7 @@ async def init():
     await Tortoise.init(
         config={
             'connections': {
-                'default': settings.db_url
+                'default': settings.DB_URL
             },
             'apps': {
                 'models': {

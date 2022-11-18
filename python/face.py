@@ -1,41 +1,21 @@
 import os
-import pickle
-
 import cv2
-import json
+import pickle
 import numpy as np
-from models.models import FaceInfo
 import os.path as oph
-from api.faceapi import *
 from base.log import logger
+from base.config import settings
+from api.faceapi import SeetaFace
+from models.models import FaceInfo
 
 # ------------------initial----------------
-# 在api中初始化了
-# ROOT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-MODEL_PATH = os.path.join(ROOT_DIR, "model")
-FACE_IMAGE_DIR = os.path.join(ROOT_DIR, "python", "facelib")
+MODEL_PATH = os.path.join(settings.ROOT_DIR, "model")
+FACE_IMAGE_DIR = os.path.join(settings.BASE_DIR, "facelib")
 FACE_LIBS_FILE = os.path.join(FACE_IMAGE_DIR, "facelib.pkl")
-TRACKING_RESOLUTION = (310, 310)
-IS_ANTI_SPOOF = False
 FACE_FEATURE_LIBS = dict()
-FUNCTAION_LISTS = ["FACE_DETECT",
-                   "LANDMARKER5",
-                   "LIVENESS",
-                   # "LANDMARKER_MASK",
-                   # "FACE_AGE",
-                   "FACE_GENDER",
-                   "FACE_RECOGNITION",
-                   # "MOUTH_MASK",
-                   "EYE_STATE",
-                   "FACE_CLARITY",
-                   "FACE_BRIGHT",
-                   "FACE_RESOLUTION",
-                   # "FACE_POSE",
-                   "FACE_INTEGRITY",
-                   "FACE_TRACK"]
-
-seetaFace = SeetaFace(FUNCTAION_LISTS, device=0, id=0)
-seetaFace.SetTrackResolution(*TRACKING_RESOLUTION)
+device = 2 if settings.USE_GPU else 1
+seetaFace = SeetaFace(settings.FUNCTIONS, device=device, id=settings.GPU_ID)
+seetaFace.SetTrackResolution(*settings.TRACKING_SIZE)
 seetaFace.init_engine(MODEL_PATH)
 
 
@@ -49,21 +29,17 @@ async def register_face_sub(face, uid: str, name: str = None, is_initial=False):
     if isinstance(face, np.ndarray):
         img = face.copy()
     elif isinstance(face, str):
-        if face.split(".")[-1].lower() in ["jpg", "jpeg", "png", "bmp"]:
+        if face.split(".")[-1].lower() in settings.ALLOW_IMAGES:
             img = cv2.imread(face)
         else:
-            logger.error("img file is supported in [jpg, jpeg, png, bmp]")
+            logger.error(f"仅支持{str(settings.ALLOW_IMAGES)}图像格式文件")
             return -1
     else:
-        logger.error("img must be np.ndarray or img path str")
+        logger.error("图像格式必须是np.ndarray类型或str类型")
         return -1
     det_result = seetaFace.Detect(img)
     if det_result.size == 0:
-        logger.warning("No face detected")
-        return -1
-    det_result = seetaFace.Detect(img)
-    if det_result.size == 0:
-        logger.warning("No face detected")
+        logger.warning("未检测到人脸")
         return -1
     face = det_result.data[0].pos
     points = seetaFace.mark5(img, face)
@@ -101,53 +77,54 @@ async def delete_face_sub(uid: str):
         # 保存人脸库
         with open(FACE_LIBS_FILE, "wb") as f:
             pickle.dump(FACE_FEATURE_LIBS, f)
-        logger.info("delete face successfully, uid is:" + uid + "name is: " + face_info["name"])
+        logger.info("删除人脸成功, uid: " + uid + "name: " + face_info["name"])
         return 0
     else:
         logger.warning("face is not existing,face uid is :" + uid)
         return -1
 
 
-def face_recognize_sub(img: np.ndarray, is_register=False):
+def face_recognize_sub(img: np.ndarray):
     det_result = seetaFace.Detect(img)
     if det_result.size == 0:
-        logger.warning("No face detected...")
+        logger.warning("未检测到人脸...")
         return
+    # 仅识别画面中最大的人脸
     face_areas = []
     for i in range(det_result.size):
         face_data = det_result.data[i]
         face = face_data.pos
         face_areas.append(face.width * face.height)
-    cv2.imwrite("123.jpg", img)
-    # sorted by face area
+    # 排序
     face_areas.sort(reverse=True)
-    # pick largest face as a available face
+    # 选取最大的人脸
     face_data = det_result.data[0]
     face = face_data.pos
     points = seetaFace.mark5(img, face)
     # 0: 真实人脸
     # 1: 攻击人脸（假人脸）
     # 2: 无法判断（人脸成像质量不好）
-    if IS_ANTI_SPOOF:
+    if settings.IS_ANTI_SPOOF:
         livnees = seetaFace.Predict(img, face, points)
         if livnees == 1:
-            logger.warning("anti_spoof face")
+            logger.warning("攻击人脸...")
             return -2
     feature = seetaFace.Extract(img, points)
     max_similar = 0
     max_key = ""
+    # todo(aichao) 理论上人脸库过大会严重影响效率，采用faiss索引的方式进行
     for key in FACE_FEATURE_LIBS.keys():
-        # similar = seetaFace.CalculateSimilarity(feature, FACE_FEATURE_LIBS[key]["feature"])
         similar = seetaFace.compare_feature_np(seetaFace.get_feature_numpy(feature), FACE_FEATURE_LIBS[key]["feature"])
         if similar > max_similar:
             max_similar = similar
             max_key = key
-    if max_similar > 0.7:
+    # 阈值
+    if max_similar > settings.REC_THRESHOLD:
         name = FACE_FEATURE_LIBS[max_key]["name"]
         uid = max_key
         return uid, name
     else:
-        logger.warning("current face is not in face libraries")
+        logger.warning("当前人脸不在人脸库中")
         return -1
 
 

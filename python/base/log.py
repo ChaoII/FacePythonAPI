@@ -8,5 +8,5 @@ if not os.path.exists(log_path):
     os.makedirs(log_path)
 log_file = os.path.join(log_path, f'BaseApi.log')
 logger.remove()
-logger.add(sys.stderr, level=settings.log_level)
-logger.add(log_file, level=settings.log_level)
+logger.add(sys.stderr, level=settings.LOG_LEVEL)
+logger.add(log_file, level=settings.LOG_LEVEL)
