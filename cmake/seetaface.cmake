@@ -27,22 +27,25 @@ file(COPY ${SEETAFACE_LIBS} DESTINATION ${LIBRARY_OUTPUT_PATH} FOLLOW_SYMLINK_CH
 if (USE_GPU)
     if (WIN32)
         add_custom_command(
-                TARGET ${PROJECT_NAME} POST_BUILD
-                COMMAND ${CMAKE_COMMAND} -E mv
-                ${LIBRARY_OUTPUT_PATH}/tennis_gpu.dll
-                ${LIBRARY_OUTPUT_PATH}/tennis.dll)
+                TARGET ${PROJECT_NAME} POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy
+                ${LIBRARY_OUTPUT_PATH}/tennis_gpu.dll ${LIBRARY_OUTPUT_PATH}/tennis.dll)
+        add_custom_command(
+                TARGET ${PROJECT_NAME} POST_BUILD COMMAND ${CMAKE_COMMAND} -E rm -rf
+                ${LIBRARY_OUTPUT_PATH}/tennis_gpu.dll)
     elseif (UNIX)
         add_custom_command(
-                TARGET ${PROJECT_NAME} POST_BUILD
-                COMMAND ${CMAKE_COMMAND} -E mv
-                ${LIBRARY_OUTPUT_PATH}/libtennis_gpu.so
-                ${LIBRARY_OUTPUT_PATH}/libtennis.so)
+                TARGET ${PROJECT_NAME} POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy
+                ${LIBRARY_OUTPUT_PATH}/libtennis_gpu.so ${LIBRARY_OUTPUT_PATH}/libtennis.so)
+        add_custom_command(
+                TARGET ${PROJECT_NAME} POST_BUILD COMMAND ${CMAKE_COMMAND} -E rm -rf
+                ${LIBRARY_OUTPUT_PATH}/libtennis_gpu.so)
     elseif (APPLE)
         add_custom_command(
-                TARGET ${PROJECT_NAME} POST_BUILD
-                COMMAND ${CMAKE_COMMAND} -E mv
-                ${LIBRARY_OUTPUT_PATH}/libtennis_gpu.dylib
-                ${LIBRARY_OUTPUT_PATH}/libtennis.dylib)
+                TARGET ${PROJECT_NAME} POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy
+                ${LIBRARY_OUTPUT_PATH}/libtennis_gpu.dylib ${LIBRARY_OUTPUT_PATH}/libtennis.dylib)
+        add_custom_command(
+                TARGET ${PROJECT_NAME} POST_BUILD COMMAND ${CMAKE_COMMAND} -E rm -rf
+                ${LIBRARY_OUTPUT_PATH}/libtennis_gpu.dylib)
     else ()
         message(FATAL_ERROR "unsupported this system")
     endif ()

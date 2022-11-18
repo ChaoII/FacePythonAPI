@@ -55,8 +55,9 @@ target_link_libraries(${LIBRARY_NAME} ${DEPEND_LIBS})
 
 if (WIN32)
     add_custom_command(
-            TARGET ${LIBRARY_NAME} POST_BUILD
-            COMMAND ${CMAKE_COMMAND} -E mv
-            ${LIBRARY_OUTPUT_PATH}/Release/FaceAPI.dll
-            ${LIBRARY_OUTPUT_PATH}/FaceAPI.dll)
+            TARGET ${LIBRARY_NAME} POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy
+            ${LIBRARY_OUTPUT_PATH}/Release/FaceAPI.dll ${LIBRARY_OUTPUT_PATH}/FaceAPI.dll)
+    add_custom_command(
+            TARGET ${LIBRARY_NAME} POST_BUILD COMMAND ${CMAKE_COMMAND} -E rm -rf
+            ${LIBRARY_OUTPUT_PATH}/Release)
 endif ()
