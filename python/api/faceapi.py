@@ -5,7 +5,6 @@ import platform
 import numpy as np
 from .face_struct import *
 from loguru import logger
-from easydict import EasyDict
 from base.config import settings
 
 _LIB_HOME = os.path.join(settings.ROOT_DIR, "build")  # api.py的目录文件夹的绝对路径
@@ -692,9 +691,9 @@ class SeetaFace(object):
         self.check_init("EYE_STATE")
         eyestate = (c_int32 * 2)()
         self._DectectEye(simage, points, eyestate)
-        state = EasyDict()
-        state.left = statedict[eyestate[0]]
-        state.right = statedict[eyestate[1]]
+        state = dict()
+        state["left"] = statedict[eyestate[0]]
+        state["right"] = statedict[eyestate[1]]
         return state
 
     def ClarityEvaluate(self, simage: SeetaImageData, face: SeetaRect, points: List[SeetaPointF]):
