@@ -18,6 +18,7 @@ face:
   is_anti_spoof: false
   use_gpu: false
   gpu_id: 0
+  cuda_dir: ""
   tracking_size: [ 310,310 ]
   functions:
     # all data in ["FACE_DETECT","LANDMARKER5","LIVENESS","LANDMARKER_MASK","FACE_AGE",

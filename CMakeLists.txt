@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 3.12)
 project(FaceAPI)
 set(LIBRARY_NAME FaceAPI)
 
+option(USE_GPU "" OFF)
 
 add_compile_options(-std=c++11 -fpic -O2)
 
@@ -44,4 +45,10 @@ endif ()
 
 target_link_libraries(${LIBRARY_NAME} ${DEPEND_LIBS})
 
-
+if (WIN32)
+    add_custom_command(
+            TARGET ${LIBRARY_NAME} POST_BUILD
+            COMMAND ${CMAKE_COMMAND} -E mv
+            ${LIBRARY_OUTPUT_PATH}/Release/FaceAPI.dll
+            ${LIBRARY_OUTPUT_PATH}/FaceAPI.dll)
+endif ()

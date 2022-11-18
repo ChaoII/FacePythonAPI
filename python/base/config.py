@@ -50,6 +50,7 @@ class Settings:
     REC_THRESHOLD = _face["rec_threshold"]
     IS_ANTI_SPOOF = _face["is_anti_spoof"]
     USE_GPU = _face["use_gpu"]
+    CUDA_DIR = _face["cuda_dir"]
     GPU_ID = _face["gpu_id"]
     TRACKING_SIZE = _face["tracking_size"]
     FUNCTIONS = _face["functions"]
