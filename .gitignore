@@ -1,4 +1,4 @@
-model
+model/*.csta
 .idea
 __pycache__
 build
