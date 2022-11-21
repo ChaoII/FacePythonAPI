@@ -269,7 +269,8 @@ int release_engine() {
     faceRecognizer = nullptr;       //人脸识别faceFecognition
     delete faceTracker;
     faceTracker = nullptr;             //人脸跟踪器
-    FRINFO << "unload engine success!" << endl;
+
+    FRINFO << "unload engine successfully!" << endl;
     return 0;
 }
 

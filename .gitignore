@@ -8,3 +8,4 @@ build/lib
 .DS_Store
 python/models/DB.sqlite-shm
 python/models/DB.sqlite-wal
+python/config.yml

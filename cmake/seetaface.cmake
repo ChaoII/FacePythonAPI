@@ -19,7 +19,34 @@ include_directories(${SEETAFACE_INC_DIR})
 # 添加外部库
 list(APPEND DEPEND_LIBS ${SEETAFACE_LIBS})
 # 拷贝文件
-if(WIN32)
+if (WIN32)
     file(GLOB SEETAFACE_LIBS ${DEP_LIBS_DIR}/*.dll)
-endif()
+endif ()
 file(COPY ${SEETAFACE_LIBS} DESTINATION ${LIBRARY_OUTPUT_PATH} FOLLOW_SYMLINK_CHAIN)
+
+if (USE_GPU)
+    if (WIN32)
+        add_custom_command(
+                TARGET ${PROJECT_NAME} POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy
+                ${LIBRARY_OUTPUT_PATH}/tennis_gpu.dll ${LIBRARY_OUTPUT_PATH}/tennis.dll)
+        add_custom_command(
+                TARGET ${PROJECT_NAME} POST_BUILD COMMAND ${CMAKE_COMMAND} -E rm -rf
+                ${LIBRARY_OUTPUT_PATH}/tennis_gpu.dll)
+    elseif (UNIX)
+        add_custom_command(
+                TARGET ${PROJECT_NAME} POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy
+                ${LIBRARY_OUTPUT_PATH}/libtennis_gpu.so ${LIBRARY_OUTPUT_PATH}/libtennis.so)
+        add_custom_command(
+                TARGET ${PROJECT_NAME} POST_BUILD COMMAND ${CMAKE_COMMAND} -E rm -rf
+                ${LIBRARY_OUTPUT_PATH}/libtennis_gpu.so)
+    elseif (APPLE)
+        add_custom_command(
+                TARGET ${PROJECT_NAME} POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy
+                ${LIBRARY_OUTPUT_PATH}/libtennis_gpu.dylib ${LIBRARY_OUTPUT_PATH}/libtennis.dylib)
+        add_custom_command(
+                TARGET ${PROJECT_NAME} POST_BUILD COMMAND ${CMAKE_COMMAND} -E rm -rf
+                ${LIBRARY_OUTPUT_PATH}/libtennis_gpu.dylib)
+    else ()
+        message(FATAL_ERROR "unsupported this system")
+    endif ()
+endif ()

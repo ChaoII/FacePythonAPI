@@ -2,6 +2,15 @@ cmake_minimum_required(VERSION 3.12)
 project(FaceAPI)
 set(LIBRARY_NAME FaceAPI)
 
+option(USE_GPU "" OFF)
+if (USE_GPU)
+    set(CUDA_DIR "")
+    set(USE_GPU true)
+else ()
+    set(USE_GPU false)
+
+endif ()
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/python/config.yml.in ${CMAKE_CURRENT_SOURCE_DIR}/python/config.yml @ONLY)
 
 add_compile_options(-std=c++11 -fpic -O2)
 
@@ -44,4 +53,11 @@ endif ()
 
 target_link_libraries(${LIBRARY_NAME} ${DEPEND_LIBS})
 
-
+if (WIN32)
+    add_custom_command(
+            TARGET ${LIBRARY_NAME} POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy
+            ${LIBRARY_OUTPUT_PATH}/Release/FaceAPI.dll ${LIBRARY_OUTPUT_PATH}/FaceAPI.dll)
+    add_custom_command(
+            TARGET ${LIBRARY_NAME} POST_BUILD COMMAND ${CMAKE_COMMAND} -E rm -rf
+            ${LIBRARY_OUTPUT_PATH}/Release)
+endif ()
