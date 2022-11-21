@@ -9,3 +9,5 @@ build/lib
 python/models/DB.sqlite-shm
 python/models/DB.sqlite-wal
 python/config.yml
+python/d.py
+python/facelib/images

@@ -26,9 +26,11 @@ yaml_config = read_yml(_YAML_FILE)
 # ----------base config--------------
 _base = yaml_config["base"]
 _face = yaml_config["face"]
+_index = yaml_config["index"]
 
 
 class Settings:
+    # base
     FastAPI_SETTINGS = dict(title=_base["title"],
                             description=_base["description"],  # 描述
                             version=_base["version"],  # 版本号
@@ -46,7 +48,7 @@ class Settings:
     LOG_LEVEL = "DEBUG" if _base["debug"] else "INFO"
     PORT = _base["port"]
     WORKERS = _base["workers"]
-
+    # face
     REC_THRESHOLD = _face["rec_threshold"]
     IS_ANTI_SPOOF = _face["is_anti_spoof"]
     USE_GPU = _face["use_gpu"]
@@ -55,6 +57,13 @@ class Settings:
     TRACKING_SIZE = _face["tracking_size"]
     FUNCTIONS = _face["functions"]
     ALLOW_IMAGES = _face["allow_images"]
+    LIB_HOME = _face["lib_home"]
+
+    # index
+    FAISS_THREADS = _index["faiss_threads"]
+    INDEX_METHOD = _index["index_method"]  # supported: HNSW32, IVF, Flat
+    EMBEDDING_SIZE = _index["embedding_size"]
+    TOP_K = _index["top_k"]
 
 
 settings = Settings()

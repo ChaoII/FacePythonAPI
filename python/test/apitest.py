@@ -9,7 +9,7 @@ from base.utils import *
 
 def test_register_face_api(id_, name, img):
     # ============test register_face api============
-    url = "http://127.0.0.1:10054/register_face"
+    url = "http://127.0.0.1:9026/register_face"
     # id_ = str(uuid.uuid4()).replace("-")
     id_ = id_
     name = name
@@ -30,7 +30,7 @@ def test_delete_face(id_: str):
 
 
 def test_face_recognize(imgpath):
-    url = "http://127.0.0.1:9026/face_recognize"
+    url = "http://localhost:9026/face_recognize"
     img = cv2.imread(imgpath)
     image = image_to_base64(img)
     data = {"imageBase64": image}
@@ -49,12 +49,13 @@ def test_get_face_library(id_=None):
 
 
 if __name__ == '__main__':
-    # test_register_face_api('01', '成龙', './asserts/1.jpg')
-    # test_register_face_api('02', '艾超', './asserts/aichao.jpg')
-    # test_register_face_api('03', '刘德华', './asserts/liudehua.jpg')
-    # test_register_face_api('04', '佟大为', './asserts/tongdawei.jpg')
-    # test_register_face_api('06', '奥沫沫', './asserts/oumei.jpg')
+    # test_register_face_api('01', '成龙', '../../images/1.jpg')
+    # test_register_face_api('02', '艾超', '../../images/aichao.jpg')
+    # test_register_face_api('03', '刘德华', '../../images/liudehua.jpg')
+    # test_register_face_api('04', '佟大为', '../../images/tongdawei.jpg')
+    # test_register_face_api('06', '奥沫沫', '../../images/oumei.jpg')
+    # test_register_face_api('07', 'chao2', '../../images/img.png')
 
-    test_face_recognize('../../images/123.jpg')
+    test_face_recognize('../../images/img.png')
     # test_delete_face('04')
     # test_get_face_library('04')

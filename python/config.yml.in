@@ -34,3 +34,10 @@ face:
     - "FACE_RESOLUTION"
     - "FACE_INTEGRITY"
   allow_images: [ "jpg", "jpeg", "png", "bmp" ]
+  lib_home: "build"
+
+index:
+  faiss_threads: 4
+  index_method: "HNSW32" # supported: HNSW32, IVF, Flat
+  embedding_size: 1024
+  top_k: 5

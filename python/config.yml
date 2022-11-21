@@ -16,7 +16,7 @@ base:
 face:
   rec_threshold: 0.7
   is_anti_spoof: false
-  use_gpu: true
+  use_gpu: false
   gpu_id: 0
   cuda_dir: 
   tracking_size: [ 310,310 ]
@@ -34,3 +34,10 @@ face:
     - "FACE_RESOLUTION"
     - "FACE_INTEGRITY"
   allow_images: [ "jpg", "jpeg", "png", "bmp" ]
+  lib_home: "build"
+
+index:
+  faiss_threads: 4
+  index_method: "HNSW32" # supported: HNSW32, IVF, Flat
+  embedding_size: 1024
+  top_k: 5

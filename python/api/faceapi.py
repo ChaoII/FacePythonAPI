@@ -7,7 +7,7 @@ from .face_struct import *
 from loguru import logger
 from base.config import settings
 
-_LIB_HOME = os.path.join(settings.ROOT_DIR, "build")  # api.py的目录文件夹的绝对路径
+_LIB_HOME = os.path.join(settings.ROOT_DIR, settings.LIB_HOME)  # api.py的目录文件夹的绝对路径
 _platform_name = platform.platform().lower()
 if settings.USE_GPU:
     # 显示添加cuda搜索路径
