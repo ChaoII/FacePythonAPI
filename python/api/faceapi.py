@@ -7,7 +7,6 @@ from .face_struct import *
 from loguru import logger
 from base.config import settings
 
-_LIB_HOME = os.path.join(settings.ROOT_DIR, settings.LIB_HOME)  # api.py的目录文件夹的绝对路径
 _platform_name = platform.platform().lower()
 if settings.USE_GPU:
     # 显示添加cuda搜索路径
@@ -17,14 +16,14 @@ if settings.USE_GPU:
     os.add_dll_directory(settings.CUDA_DIR)
 
 if "windows" in _platform_name:
-    LIB_PATH = os.path.join(_LIB_HOME, "lib", "win")
+    LIB_PATH = os.path.join(settings.BASE_DIR, "lib", "win")
     os.environ["PATH"] += os.pathsep + LIB_PATH
     dll = CDLL(os.path.join(LIB_PATH, "FaceAPI.dll"))
 elif "linux" in _platform_name:
-    LIB_PATH = os.path.join(_LIB_HOME, "lib", "linux")
+    LIB_PATH = os.path.join(settings.BASE_DIR, "lib", "linux")
     dll = CDLL(os.path.join(LIB_PATH, "libFaceAPI.so"))
 elif "macos" in _platform_name:
-    LIB_PATH = os.path.join(_LIB_HOME, "lib", "mac")
+    LIB_PATH = os.path.join(settings.BASE_DIR, "lib", "mac")
     dll = CDLL(os.path.join(LIB_PATH, "libFaceAPI.dylib"))
 else:
     logger.error("unsupported this system")

@@ -34,7 +34,6 @@ face:
     - "FACE_RESOLUTION"
     - "FACE_INTEGRITY"
   allow_images: [ "jpg", "jpeg", "png", "bmp" ]
-  lib_home: "build"
 
 index:
   faiss_threads: 4

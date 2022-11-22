@@ -3,18 +3,8 @@ project(FaceAPI)
 set(LIBRARY_NAME FaceAPI)
 option(USE_GPU "" OFF)
 set(CUDA_DIR "" CACHE PATH "If build tensorrt backend, need to define path of cuda library.")
-if (USE_GPU)
-    set(USE_GPU true)
-    if (NOT CUDA_DIR)
-        message(FATAL "while USE GPU must define CUDA_DIR")
-    endif ()
-else ()
-    set(USE_GPU false)
-endif ()
 message(STATUS "USE GPU ${USE_GPU}")
 message(STATUS ${CUDA_DIR})
-configure_file(${CMAKE_CURRENT_SOURCE_DIR}/python/config.yml.in ${CMAKE_CURRENT_SOURCE_DIR}/python/config.yml @ONLY)
-
 add_compile_options(-std=c++11 -fpic -O2)
 
 find_package(OpenMP)
@@ -43,7 +33,15 @@ else ()
 endif ()
 # seetaface
 include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/seetaface.cmake)
-
+if (USE_GPU)
+    set(USE_GPU true)
+    if (NOT CUDA_DIR)
+        message(FATAL "while USE GPU must define CUDA_DIR")
+    endif ()
+else ()
+    set(USE_GPU false)
+endif ()
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/python/config.yml.in ${CMAKE_CURRENT_SOURCE_DIR}/python/config.yml @ONLY)
 include_directories(${INC_DIR})
 if (APPLE)
     set_target_properties(${LIBRARY_NAME} PROPERTIES COMPILE_FLAGS "-fvisibility=hidden")
@@ -53,14 +51,5 @@ else ()
     set_target_properties(${LIBRARY_NAME} PROPERTIES LINK_FLAGS "-Wl,--exclude-libs,ALL")
     set_target_properties(${LIBRARY_NAME} PROPERTIES LINK_FLAGS_RELEASE -s)
 endif ()
-
 target_link_libraries(${LIBRARY_NAME} ${DEPEND_LIBS})
-
-if (WIN32)
-    add_custom_command(
-            TARGET ${LIBRARY_NAME} POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy
-            ${LIBRARY_OUTPUT_PATH}/Release/FaceAPI.dll ${LIBRARY_OUTPUT_PATH}/FaceAPI.dll)
-    add_custom_command(
-            TARGET ${LIBRARY_NAME} POST_BUILD COMMAND ${CMAKE_COMMAND} -E rm -rf
-            ${LIBRARY_OUTPUT_PATH}/Release)
-endif ()
+include(cmake/copyfile.cmake)

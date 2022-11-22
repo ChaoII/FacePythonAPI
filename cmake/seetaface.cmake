@@ -32,21 +32,15 @@ if (USE_GPU)
         add_custom_command(
                 TARGET ${PROJECT_NAME} POST_BUILD COMMAND ${CMAKE_COMMAND} -E rm -rf
                 ${LIBRARY_OUTPUT_PATH}/tennis_gpu.dll)
-    elseif (UNIX)
+    elseif (UNIX AND NOT APPLE)
         add_custom_command(
                 TARGET ${PROJECT_NAME} POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy
                 ${LIBRARY_OUTPUT_PATH}/libtennis_gpu.so ${LIBRARY_OUTPUT_PATH}/libtennis.so)
         add_custom_command(
                 TARGET ${PROJECT_NAME} POST_BUILD COMMAND ${CMAKE_COMMAND} -E rm -rf
                 ${LIBRARY_OUTPUT_PATH}/libtennis_gpu.so)
-    elseif (APPLE)
-        add_custom_command(
-                TARGET ${PROJECT_NAME} POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy
-                ${LIBRARY_OUTPUT_PATH}/libtennis_gpu.dylib ${LIBRARY_OUTPUT_PATH}/libtennis.dylib)
-        add_custom_command(
-                TARGET ${PROJECT_NAME} POST_BUILD COMMAND ${CMAKE_COMMAND} -E rm -rf
-                ${LIBRARY_OUTPUT_PATH}/libtennis_gpu.dylib)
     else ()
-        message(FATAL_ERROR "unsupported this system")
+        message(WARNING "GPU is supported only by windows and linux , USE_GPU will be turn off")
+        set(USE_GPU OFF)
     endif ()
 endif ()

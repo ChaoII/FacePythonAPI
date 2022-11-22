@@ -43,7 +43,6 @@ class Settings:
                 allow_headers=_base["allow_headers"])  # 允许跨域的headers，可以用来鉴别来源等作用.
     # 程序配置
     BASE_DIR = Path(__file__).resolve().parent.parent
-    ROOT_DIR = BASE_DIR.parent
 
     LOG_LEVEL = "DEBUG" if _base["debug"] else "INFO"
     PORT = _base["port"]
@@ -57,7 +56,6 @@ class Settings:
     TRACKING_SIZE = _face["tracking_size"]
     FUNCTIONS = _face["functions"]
     ALLOW_IMAGES = _face["allow_images"]
-    LIB_HOME = _face["lib_home"]
 
     # index
     FAISS_THREADS = _index["faiss_threads"]

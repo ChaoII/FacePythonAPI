@@ -21,7 +21,7 @@ class FaceAPI:
         self.init_engine()
 
     def init_engine(self):
-        model_dir = os.path.join(settings.ROOT_DIR, "model")
+        model_dir = os.path.join(settings.BASE_DIR, "model")
         device = 2 if settings.USE_GPU else 1
         self.seetaFace = SeetaFace(settings.FUNCTIONS, device=device, id=settings.GPU_ID)
         self.seetaFace.SetTrackResolution(*settings.TRACKING_SIZE)

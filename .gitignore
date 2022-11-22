@@ -14,3 +14,5 @@ python/logs/*.log
 python/facelib/index/*.index
 python/facelib/*.pkl
 python/d.py
+python/model/*
+python/lib/*
