@@ -9,6 +9,7 @@ if (USE_GPU)
 else ()
     set(USE_GPU false)
 endif ()
+message(STATUS "USE GPU ${USE_GPU}")
 message(STATUS ${CUDA_DIR})
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/python/config.yml.in ${CMAKE_CURRENT_SOURCE_DIR}/python/config.yml @ONLY)
 
