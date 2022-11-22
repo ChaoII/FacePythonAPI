@@ -1113,3 +1113,10 @@
 2022-11-22 17:36:57.767 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/register_face  |IP:127.0.0.1
 2022-11-22 17:36:57.880 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/register_face  |IP:127.0.0.1
 2022-11-22 17:36:58.093 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/register_face  |IP:127.0.0.1
+2022-11-22 18:07:18.557 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/register_face  |IP:127.0.0.1
+2022-11-22 18:10:45.675 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/register_face  |IP:127.0.0.1
+2022-11-22 18:10:46.585 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/register_face  |IP:127.0.0.1
+2022-11-22 18:10:48.637 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/register_face  |IP:127.0.0.1
+2022-11-22 18:10:48.767 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/register_face  |IP:127.0.0.1
+2022-11-22 18:10:48.906 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/register_face  |IP:127.0.0.1
+2022-11-22 18:10:49.105 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/register_face  |IP:127.0.0.1

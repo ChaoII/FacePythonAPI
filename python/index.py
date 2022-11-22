@@ -17,7 +17,7 @@ class IndexManager:
         self.index_method = settings.INDEX_METHOD
         self.top_k = settings.TOP_K
         self.index = None
-        if os.path.exists(self.index_dir):
+        if not os.path.exists(self.index_dir):
             os.mkdir(self.index_dir)
 
     def _save_index(self):
