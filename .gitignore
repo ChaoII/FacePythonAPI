@@ -9,8 +9,8 @@ build/lib
 python/models/DB.sqlite-shm
 python/models/DB.sqlite-wal
 python/config.yml
-python/d.py
 python/facelib/images
 python/logs/*.log
 python/facelib/index/*.index
 python/facelib/*.pkl
+python/d.py
