@@ -8,8 +8,8 @@ if (USE_GPU)
     set(USE_GPU true)
 else ()
     set(USE_GPU false)
-
 endif ()
+message(STATUS ${CUDA_DIR})
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/python/config.yml.in ${CMAKE_CURRENT_SOURCE_DIR}/python/config.yml @ONLY)
 
 add_compile_options(-std=c++11 -fpic -O2)
