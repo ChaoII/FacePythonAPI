@@ -11,11 +11,14 @@ faiss.omp_set_num_threads(settings.FAISS_THREADS)
 
 class IndexManager:
     def __init__(self, face_img_dir):
-        self.index_path = os.path.join(face_img_dir, "index", "vector.index")
+        self.index_dir = os.path.join(face_img_dir, "index")
+        self.index_path = os.path.join(self.index_dir, "vector.index")
         self.embedding_size = settings.EMBEDDING_SIZE
         self.index_method = settings.INDEX_METHOD
         self.top_k = settings.TOP_K
         self.index = None
+        if os.path.exists(self.index_dir):
+            os.mkdir(self.index_dir)
 
     def _save_index(self):
         if self.index is None:

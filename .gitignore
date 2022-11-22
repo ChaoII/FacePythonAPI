@@ -6,6 +6,7 @@ bin
 build/lib
 .cmake
 .DS_Store
+python/models/DB.sqlite
 python/models/DB.sqlite-shm
 python/models/DB.sqlite-wal
 python/config.yml
@@ -16,3 +17,4 @@ python/facelib/*.pkl
 python/d.py
 python/model/*
 python/lib/*
+python/test/apitest.py

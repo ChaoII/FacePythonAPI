@@ -36,7 +36,8 @@ class FaceAPI:
             return
         with open(self.FACE_LIBS_FILE, "rb") as f:
             self.FACE_FEATURE_LIBS = pickle.load(f)
-            self.index_manager.build_index(self.FACE_FEATURE_LIBS)
+        # 初始化阶段构建索引库
+        self.index_manager.build_index(self.FACE_FEATURE_LIBS)
 
     async def register_face_sub(self, face, uid: str, name: str = None):
         if isinstance(face, np.ndarray):
@@ -62,9 +63,8 @@ class FaceAPI:
         # 保存并覆盖
         with open(self.FACE_LIBS_FILE, "wb") as f:
             pickle.dump(self.FACE_FEATURE_LIBS, f)
-            # ------------------ 重新构建索引-------------------
-            self.index_manager.build_index(self.FACE_FEATURE_LIBS)
-
+        # ------------------ 重新构建索引-------------------
+        self.index_manager.build_index(self.FACE_FEATURE_LIBS)
         img_url = "/facelib/images/" + uid + ".jpg"
         img_path = oph.join(self.FACE_IMAGE_DIR, uid + ".jpg")
         # 判断人脸是否存在，存在
@@ -90,8 +90,8 @@ class FaceAPI:
             # 保存人脸库
             with open(self.FACE_LIBS_FILE, "wb") as f:
                 pickle.dump(self.FACE_FEATURE_LIBS, f)
-                # ------------------ 重新构建索引-------------------
-                self.index_manager.build_index(self.FACE_FEATURE_LIBS)
+            # ------------------ 重新构建索引-------------------
+            self.index_manager.build_index(self.FACE_FEATURE_LIBS)
             logger.info("删除人脸成功, uid: " + uid + "name: " + face_info["name"])
             return 0
         else:

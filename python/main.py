@@ -96,8 +96,10 @@ async def face_recognize(request: Request, image: str = Body(..., embed=True, al
 @limiter.limit("5/second")
 async def get_face_library(request: Request, uid: Optional[str] = Body(None, embed=True)):
     if uid is None:
-        return await FaceInfo.all()
-    return await FaceInfo.filter(uid=uid).all()
+        data = await FaceInfo.all()
+    else:
+        data = await FaceInfo.filter(uid=uid).all()
+    return {"code": 0, "data": {"result": data}, "msg": "人脸识别成功!"}
 
 
 if __name__ == "__main__":
