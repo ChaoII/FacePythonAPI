@@ -124,10 +124,12 @@ class FaceAPI:
                 logger.warning("攻击人脸...")
                 return -2
         feature = self.seetaFace.Extract(img, points)
+        # 向量查找[HNSW32]以空间换时间，召回率高
         distances, indexs = self.index_manager.search_result(self.seetaFace.get_feature_numpy(feature))
         # 阈值
         if distances[0][0] > settings.REC_THRESHOLD:
-            uid = indexs[0][0]
+            uid = str(indexs[0][0])
+            # 比如uid为"023"经过索引后变成23这样会找不到id
             if uid not in self.FACE_FEATURE_LIBS.keys():
                 logger.warning("当前人脸不在人脸库中, 人脸库可能出现混乱, 请重新梳理人脸库, 或者人脸id异常，注意：【人脸id必须是整形，并且，不能是以0开头】")
                 return -1
@@ -140,3 +142,6 @@ class FaceAPI:
     def age_predict(self, image, points):
         age = self.seetaFace.PredictAgeWithCrop(image, points)
         return age
+
+    def unload_engine(self):
+        self.seetaFace.unload_engine()

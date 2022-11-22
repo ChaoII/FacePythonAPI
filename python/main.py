@@ -3,22 +3,29 @@ from typing import Optional
 from models.models import FaceInfo
 from base.config import settings
 from base.utils import base64_to_image
-from fastapi import FastAPI, Body
+from fastapi import FastAPI, Body, applications
 from base.db import do_stuff, init
 from fastapi.staticfiles import StaticFiles
-from base.middleware import *
 from fastapi.requests import Request
 from models.pydantic_models import FaceInfoIn
+from base.middleware import (register_offline_docs,
+                             register_middleware,
+                             register_orm,
+                             register_exception,
+                             register_limit,
+                             register_cors)
 
+# 必须在app实例化之前进行注册
+register_offline_docs(applications)
+# 实例化app
 app = FastAPI(**settings.FastAPI_SETTINGS)
 app.mount(path="/facelib", app=StaticFiles(directory="./facelib"), name="facelib")
-# app.mount("/static", StaticFiles(directory="./static"), name="static")
+app.mount("/static", StaticFiles(directory="static"), name="static")
 
 register_orm(app)
 register_cors(app)
 register_exception(app)
 limiter = register_limit(app)
-register_offline_docs(app)
 register_middleware(app)
 
 face_api = FaceAPI()
@@ -34,6 +41,8 @@ async def initial_db():
 async def shutdown_event():
     """添加在应用程序关闭时关闭所有数据库链接"""
     await do_stuff()
+    # 卸载engine
+    face_api.unload_engine()
 
 
 @app.post("/register_face")

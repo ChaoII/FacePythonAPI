@@ -1,6 +1,6 @@
 from base.log import logger
 from base.config import settings
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, applications, Request
 from slowapi.errors import RateLimitExceeded
 from slowapi.util import get_remote_address
 from tortoise.contrib.fastapi import register_tortoise
@@ -11,31 +11,30 @@ from fastapi.openapi.docs import get_swagger_ui_html
 from fastapi.openapi.docs import get_swagger_ui_oauth2_redirect_html
 
 
-def register_offline_docs(app: FastAPI):
-    @app.get("/docs", include_in_schema=False)
-    async def custom_swagger_ui_html():
+def register_offline_docs(app: applications):
+    def custom_swagger_ui_html(*args, **kwargs):
         return get_swagger_ui_html(
-            openapi_url=app.openapi_url,
-            title=app.title + " - Swagger UI",
-            oauth2_redirect_url=app.swagger_ui_oauth2_redirect_url,
+            *args,
+            **kwargs,
             swagger_js_url="/static/swagger-ui/swagger-ui-bundle.js",
             swagger_css_url="/static/swagger-ui/swagger-ui.css",
             swagger_favicon_url="/static/swagger-ui/favicon.png"
         )
 
-    @app.get(app.swagger_ui_oauth2_redirect_url, include_in_schema=False)
-    async def swagger_ui_redirect():
+    def swagger_ui_redirect():
         return get_swagger_ui_oauth2_redirect_html()
 
-    @app.get("/redoc", include_in_schema=False)
-    async def redoc_html():
+    def redoc_html(*args, **kwargs):
         return get_redoc_html(
-            openapi_url=app.openapi_url,
-            title=app.title + " - ReDoc",
+            *args,
+            **kwargs,
             redoc_js_url="/static/redoc/bundles/redoc.standalone.js",
             redoc_favicon_url="/static/redoc/img/favicon.png",
-
         )
+
+    app.get_swagger_ui_html = custom_swagger_ui_html
+    app.get_swagger_ui_oauth2_redirect_html = swagger_ui_redirect
+    app.get_redoc_html = redoc_html
 
 
 def register_cors(app: FastAPI):
