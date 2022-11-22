@@ -14,7 +14,7 @@ if settings.USE_GPU:
     if settings.CUDA_DIR is None:
         logger.error("开启GPU情况下请设置好cuda目录")
         exit(-1)
-    os.add_dll_directory(settings.CUDA_DIR)
+    os.add_dll_directory(repr(settings.CUDA_DIR))
 
 if "windows" in _platform_name:
     LIB_PATH = os.path.join(_LIB_HOME, "lib", "win")
