@@ -1,4 +1,5 @@
 from face import FaceAPI
+import time
 from typing import Optional
 from models.models import FaceInfo
 from base.config import settings
@@ -76,19 +77,26 @@ async def delete_face(request: Request, uid: str = Body(..., embed=True)):
 @app.post("/face_recognize")
 @limiter.limit("5/second")
 async def face_recognize(request: Request, image: str = Body(..., embed=True, alias="imageBase64")):
+    decode_time_start = time.time()
     image = base64_to_image(image)
+    decode_time_end = time.time()
+    decode_time = round(decode_time_end - decode_time_start, 4)
     if image is None:
-        return {"code": -1, "data": {}, "msg": "未知异常! 请确认人脸完全在人脸遮罩内"}
+        return {"code": -1, "data": {}, "msg": "未知异常! 请确认人脸完全在人脸遮罩内", "decode_time": decode_time}
+    rec_time_start = time.time()
     ret = face_api.face_recognize_sub(image)
+    rec_time_end = time.time()
+    rec_time = round(rec_time_end - rec_time_start, 4)
     if ret is None:
-        return {"code": -1, "data": {}, "msg": "未知异常! 请确认人脸完全在人脸遮罩内"}
+        return {"code": -1, "data": {}, "msg": "未知异常! 请确认人脸完全在人脸遮罩内", "decode_time": decode_time, "rec_time": rec_time}
     if ret == -1:
         return {"code": -1, "data": {},
-                "msg": "人脸识别失败，请准确将人脸置于指定区域，或人脸不在人脸库中！"}
+                "msg": "人脸识别失败，请准确将人脸置于指定区域，或人脸不在人脸库中", "decode_time": decode_time, "rec_time": rec_time}
     elif ret == -2:
-        return {"code": -2, "data": {}, "msg": "非活体人脸！"}
+        return {"code": -2, "data": {}, "msg": "非活体人脸！", "decode_time": decode_time, "rec_time": rec_time}
     else:
-        return {"code": 0, "data": {"uid": ret[0], "name": ret[1]}, "msg": "人脸识别成功!"}
+        return {"code": 0, "data": {"uid": ret[0], "name": ret[1]}, "msg": "人脸识别成功!", "decode_time": decode_time,
+                "rec_time": rec_time}
 
 
 @app.post("/get_face_library")

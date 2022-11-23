@@ -58,7 +58,6 @@ class IndexManager:
         feature = feature.reshape((-1, self.embedding_size))
         if self.index is None:
             return
-        logger.error(feature.shape)
         distance, index = self.index.search(feature, self.top_k)
         return distance, index
 

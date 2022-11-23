@@ -1,6 +1,7 @@
 import requests
 import os, sys
 import cv2
+import time
 from pathlib import Path
 
 sys.path.append(str(Path(__file__).resolve().parent.parent))
@@ -30,7 +31,7 @@ def test_delete_face(id_: str):
 
 
 def test_face_recognize(imgpath):
-    url = "http://localhost:9026/face_recognize"
+    url = "http://127.0.0.1:9026/face_recognize"
     img = cv2.imread(imgpath)
     image = image_to_base64(img)
     data = {"imageBase64": image}
@@ -49,13 +50,31 @@ def test_get_face_library(id_=None):
 
 
 if __name__ == '__main__':
-    test_register_face_api('71', '成龙', '../../images/1.jpg')
-    test_register_face_api('72', '艾超', '../../images/aichao.jpg')
-    test_register_face_api('73', '刘德华', '../../images/liudehua.jpg')
-    test_register_face_api('74', '佟大为', '../../images/tongdawei.jpg')
-    test_register_face_api('75', '奥沫沫', '../../images/oumei.jpg')
-    test_register_face_api('76', 'chao2', '../../images/img.png')
-
-    # test_face_recognize('../../images/img.png')
+    for i in range(5):
+        # test_register_face_api('71', '成龙', '../../images/1.jpg')
+        # test_register_face_api('72', '艾超', '../../images/aichao.jpg')
+        # test_register_face_api('73', '刘德华', '../../images/liudehua.jpg')
+        # test_register_face_api('74', '佟大为', '../../images/tongdawei.jpg')
+        # test_register_face_api('75', '奥沫沫', '../../images/oumei.jpg')
+        # test_register_face_api('76', 'chao2', '../../images/img.png')
+    # for i in range(10):
+    #     time.sleep(0.2)
+    #     test_face_recognize('../../images/img.png')
+        test_face_recognize('../../images/liudehua.jpg')
+        test_face_recognize('../../images/oumei.jpg')
+        test_face_recognize('../../images/2.jpg')
+        test_face_recognize('../../images/tongdawei.jpg')
+        test_face_recognize('../../images/liudehua.jpg')
+        test_face_recognize('../../images/oumei.jpg')
+        test_face_recognize('../../images/2.jpg')
+        test_face_recognize('../../images/tongdawei.jpg')
+        test_face_recognize('../../images/liudehua.jpg')
+        test_face_recognize('../../images/oumei.jpg')
+        test_face_recognize('../../images/2.jpg')
+        test_face_recognize('../../images/tongdawei.jpg')
+        test_face_recognize('../../images/liudehua.jpg')
+        test_face_recognize('../../images/oumei.jpg')
+        test_face_recognize('../../images/2.jpg')
+        test_face_recognize('../../images/tongdawei.jpg')
     # test_delete_face('04')
     # test_get_face_library('04')
