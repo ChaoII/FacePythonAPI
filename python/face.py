@@ -13,15 +13,35 @@ from index import IndexManager
 class FaceAPI:
     def __init__(self):
         # ------------------initial----------------
-        self.FACE_IMAGE_DIR = os.path.join(settings.BASE_DIR, "facelib", "images")
-        self.FACE_LIBS_FILE = os.path.join(settings.BASE_DIR, "facelib", "facelib.pkl")
+        self.FACE_LIB_DIR = os.path.join(settings.BASE_DIR, "facelib")
+        self.FACE_IMAGE_DIR = os.path.join(self.FACE_LIB_DIR, "images")
+        self.INDEX_DIR = os.path.join(self.FACE_LIB_DIR, "index")
+        self.FACE_LIBS_FILE = os.path.join(self.FACE_LIB_DIR, "facelib.pkl")
+        # 初始化项目路径
+        self.initial_directory()
+        # 初始化人脸特征库对象
         self.FACE_FEATURE_LIBS = dict()
-        self.index_manager = IndexManager(os.path.join(settings.BASE_DIR, "facelib"))
+        # 初始化索引
+        self.index_manager = IndexManager(self.INDEX_DIR)
+        # 声明seetaFace对象
         self.seetaFace = None
-        self.init_engine()
+        self.init_model()
 
-    def init_engine(self):
+    def initial_directory(self):
+        if not os.path.exists(self.FACE_LIB_DIR):
+            os.mkdir(self.FACE_LIB_DIR)
+
+        if not os.path.exists(self.FACE_IMAGE_DIR):
+            os.mkdir(self.FACE_IMAGE_DIR)
+
+        if not os.path.exists(self.INDEX_DIR):
+            os.mkdir(self.INDEX_DIR)
+
+    def init_model(self):
         model_dir = os.path.join(settings.BASE_DIR, "model")
+        if not os.path.exists(model_dir):
+            logger.error("模型路径不存在，请先将模型所在文件夹【model】放置于，启动文件同级目录下")
+            exit(-1)
         device = 2 if settings.USE_GPU else 1
         self.seetaFace = SeetaFace(settings.FUNCTIONS, device=device, id=settings.GPU_ID)
         self.seetaFace.SetTrackResolution(*settings.TRACKING_SIZE)
@@ -53,7 +73,7 @@ class FaceAPI:
             return -1
         det_result = self.seetaFace.Detect(img)
         if det_result.size == 0:
-            logger.warning("未检测到人脸")
+            logger.warning("未检测到人脸，请确保画面中存在人脸...")
             return -1
         face = det_result.data[0].pos
         points = self.seetaFace.mark5(img, face)
