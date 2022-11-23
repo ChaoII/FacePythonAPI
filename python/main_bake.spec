@@ -13,7 +13,7 @@ a = Analysis(
 	(R'C:\ProgramData\Anaconda3\envs\face\Lib\site-packages\faiss_cpu.libs\flang-6eb4555b6a5a30f68c242ed302be298b.dll','.'),],
     datas=[('facelib','facelib'),('lib','lib'),('static','static'),
 	('logs','logs'),('model','model'),('config.yml','.'),('models/DB.sqlite','models')],
-    hiddenimports=['tortoise.backends.sqlite'],
+    hiddenimports=['tortoise.backends.sqlite','main'],
     hookspath=[],
     hooksconfig={},
     runtime_hooks=[],

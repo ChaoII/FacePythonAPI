@@ -3751,3 +3751,204 @@
 2022-11-23 10:00:34.777 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://127.0.0.1:9026/face_recognize  |IP:127.0.0.1
 2022-11-23 10:00:34.791 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://127.0.0.1:9026/face_recognize  |IP:127.0.0.1
 2022-11-23 10:00:34.847 | WARNING  | index:search_result:57 - feature dim must be 2, will force reshape
+2022-11-23 10:50:36.920 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/face_recognize  |IP:127.0.0.1
+2022-11-23 10:50:37.002 | WARNING  | index:search_result:57 - feature dim must be 2, will force reshape
+2022-11-23 10:50:37.041 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/face_recognize  |IP:127.0.0.1
+2022-11-23 10:50:37.310 | WARNING  | index:search_result:57 - feature dim must be 2, will force reshape
+2022-11-23 10:50:37.333 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/face_recognize  |IP:127.0.0.1
+2022-11-23 10:50:37.405 | WARNING  | index:search_result:57 - feature dim must be 2, will force reshape
+2022-11-23 10:50:37.423 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/face_recognize  |IP:127.0.0.1
+2022-11-23 10:50:37.492 | WARNING  | index:search_result:57 - feature dim must be 2, will force reshape
+2022-11-23 10:50:37.504 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/face_recognize  |IP:127.0.0.1
+2022-11-23 10:50:37.555 | WARNING  | index:search_result:57 - feature dim must be 2, will force reshape
+2022-11-23 10:50:37.616 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/face_recognize  |IP:127.0.0.1
+2022-11-23 10:50:37.638 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/face_recognize  |IP:127.0.0.1
+2022-11-23 10:50:37.658 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/face_recognize  |IP:127.0.0.1
+2022-11-23 10:50:37.671 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/face_recognize  |IP:127.0.0.1
+2022-11-23 10:50:37.699 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/face_recognize  |IP:127.0.0.1
+2022-11-23 10:50:37.720 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/face_recognize  |IP:127.0.0.1
+2022-11-23 10:50:37.740 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/face_recognize  |IP:127.0.0.1
+2022-11-23 10:50:37.753 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/face_recognize  |IP:127.0.0.1
+2022-11-23 10:50:37.780 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/face_recognize  |IP:127.0.0.1
+2022-11-23 10:50:37.797 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/face_recognize  |IP:127.0.0.1
+2022-11-23 10:50:37.813 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/face_recognize  |IP:127.0.0.1
+2022-11-23 10:50:37.824 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/face_recognize  |IP:127.0.0.1
+2022-11-23 10:50:37.850 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/face_recognize  |IP:127.0.0.1
+2022-11-23 10:50:37.867 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/face_recognize  |IP:127.0.0.1
+2022-11-23 10:50:37.883 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/face_recognize  |IP:127.0.0.1
+2022-11-23 10:50:37.894 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/face_recognize  |IP:127.0.0.1
+2022-11-23 10:50:37.920 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/face_recognize  |IP:127.0.0.1
+2022-11-23 10:50:37.937 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/face_recognize  |IP:127.0.0.1
+2022-11-23 10:50:38.004 | WARNING  | index:search_result:57 - feature dim must be 2, will force reshape
+2022-11-23 10:50:38.018 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/face_recognize  |IP:127.0.0.1
+2022-11-23 10:50:38.086 | WARNING  | index:search_result:57 - feature dim must be 2, will force reshape
+2022-11-23 10:50:38.095 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/face_recognize  |IP:127.0.0.1
+2022-11-23 10:50:38.147 | WARNING  | index:search_result:57 - feature dim must be 2, will force reshape
+2022-11-23 10:50:38.172 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/face_recognize  |IP:127.0.0.1
+2022-11-23 10:50:38.273 | WARNING  | index:search_result:57 - feature dim must be 2, will force reshape
+2022-11-23 10:50:38.292 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/face_recognize  |IP:127.0.0.1
+2022-11-23 10:50:38.357 | WARNING  | index:search_result:57 - feature dim must be 2, will force reshape
+2022-11-23 10:50:38.373 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/face_recognize  |IP:127.0.0.1
+2022-11-23 10:50:38.384 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/face_recognize  |IP:127.0.0.1
+2022-11-23 10:50:38.417 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/face_recognize  |IP:127.0.0.1
+2022-11-23 10:50:38.436 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/face_recognize  |IP:127.0.0.1
+2022-11-23 10:50:38.456 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/face_recognize  |IP:127.0.0.1
+2022-11-23 10:50:38.470 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/face_recognize  |IP:127.0.0.1
+2022-11-23 10:50:38.500 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/face_recognize  |IP:127.0.0.1
+2022-11-23 10:50:38.519 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/face_recognize  |IP:127.0.0.1
+2022-11-23 10:50:38.539 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/face_recognize  |IP:127.0.0.1
+2022-11-23 10:50:38.550 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/face_recognize  |IP:127.0.0.1
+2022-11-23 10:50:38.579 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/face_recognize  |IP:127.0.0.1
+2022-11-23 10:50:38.600 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/face_recognize  |IP:127.0.0.1
+2022-11-23 10:50:38.617 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/face_recognize  |IP:127.0.0.1
+2022-11-23 10:50:38.628 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/face_recognize  |IP:127.0.0.1
+2022-11-23 10:50:38.656 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/face_recognize  |IP:127.0.0.1
+2022-11-23 10:50:38.677 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/face_recognize  |IP:127.0.0.1
+2022-11-23 10:50:38.694 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/face_recognize  |IP:127.0.0.1
+2022-11-23 10:50:38.707 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/face_recognize  |IP:127.0.0.1
+2022-11-23 10:50:38.735 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/face_recognize  |IP:127.0.0.1
+2022-11-23 10:50:38.752 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/face_recognize  |IP:127.0.0.1
+2022-11-23 10:50:38.769 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/face_recognize  |IP:127.0.0.1
+2022-11-23 10:50:38.779 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/face_recognize  |IP:127.0.0.1
+2022-11-23 10:50:38.812 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/face_recognize  |IP:127.0.0.1
+2022-11-23 10:50:38.832 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/face_recognize  |IP:127.0.0.1
+2022-11-23 10:50:38.850 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/face_recognize  |IP:127.0.0.1
+2022-11-23 10:50:38.862 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/face_recognize  |IP:127.0.0.1
+2022-11-23 10:50:38.891 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/face_recognize  |IP:127.0.0.1
+2022-11-23 10:50:38.910 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/face_recognize  |IP:127.0.0.1
+2022-11-23 10:50:38.929 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/face_recognize  |IP:127.0.0.1
+2022-11-23 10:50:38.942 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/face_recognize  |IP:127.0.0.1
+2022-11-23 10:50:38.992 | WARNING  | index:search_result:57 - feature dim must be 2, will force reshape
+2022-11-23 10:50:39.017 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/face_recognize  |IP:127.0.0.1
+2022-11-23 10:50:39.109 | WARNING  | index:search_result:57 - feature dim must be 2, will force reshape
+2022-11-23 10:50:39.127 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/face_recognize  |IP:127.0.0.1
+2022-11-23 10:50:39.194 | WARNING  | index:search_result:57 - feature dim must be 2, will force reshape
+2022-11-23 10:50:39.212 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/face_recognize  |IP:127.0.0.1
+2022-11-23 10:50:39.274 | WARNING  | index:search_result:57 - feature dim must be 2, will force reshape
+2022-11-23 10:50:39.285 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/face_recognize  |IP:127.0.0.1
+2022-11-23 10:50:39.332 | WARNING  | index:search_result:57 - feature dim must be 2, will force reshape
+2022-11-23 10:50:39.358 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/face_recognize  |IP:127.0.0.1
+2022-11-23 10:50:39.378 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/face_recognize  |IP:127.0.0.1
+2022-11-23 10:50:39.393 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/face_recognize  |IP:127.0.0.1
+2022-11-23 10:50:39.403 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/face_recognize  |IP:127.0.0.1
+2022-11-23 10:50:39.429 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/face_recognize  |IP:127.0.0.1
+2022-11-23 10:50:39.445 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/face_recognize  |IP:127.0.0.1
+2022-11-23 10:50:39.461 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/face_recognize  |IP:127.0.0.1
+2022-11-23 10:50:39.471 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/face_recognize  |IP:127.0.0.1
+2022-11-23 10:50:39.496 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/face_recognize  |IP:127.0.0.1
+2022-11-23 10:50:39.513 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/face_recognize  |IP:127.0.0.1
+2022-11-23 10:50:39.532 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/face_recognize  |IP:127.0.0.1
+2022-11-23 10:50:39.546 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/face_recognize  |IP:127.0.0.1
+2022-11-23 10:50:39.619 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/face_recognize  |IP:127.0.0.1
+2022-11-23 10:50:39.671 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/face_recognize  |IP:127.0.0.1
+2022-11-23 10:50:39.692 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/face_recognize  |IP:127.0.0.1
+2022-11-23 10:50:39.715 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/face_recognize  |IP:127.0.0.1
+2022-11-23 10:50:39.759 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/face_recognize  |IP:127.0.0.1
+2022-11-23 10:50:39.785 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/face_recognize  |IP:127.0.0.1
+2022-11-23 10:50:39.812 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/face_recognize  |IP:127.0.0.1
+2022-11-23 10:51:47.165 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/face_recognize  |IP:127.0.0.1
+2022-11-23 10:51:47.216 | WARNING  | index:search_result:57 - feature dim must be 2, will force reshape
+2022-11-23 10:51:47.217 | INFO     | base.utils:inner:19 - 函数[face_recognize_sub]耗时：0.047551s
+2022-11-23 10:51:47.250 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/face_recognize  |IP:127.0.0.1
+2022-11-23 10:51:47.348 | WARNING  | index:search_result:57 - feature dim must be 2, will force reshape
+2022-11-23 10:51:47.349 | INFO     | base.utils:inner:19 - 函数[face_recognize_sub]耗时：0.090664s
+2022-11-23 10:51:47.367 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/face_recognize  |IP:127.0.0.1
+2022-11-23 10:51:47.429 | WARNING  | index:search_result:57 - feature dim must be 2, will force reshape
+2022-11-23 10:51:47.429 | INFO     | base.utils:inner:19 - 函数[face_recognize_sub]耗时：0.056185s
+2022-11-23 10:51:47.443 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/face_recognize  |IP:127.0.0.1
+2022-11-23 10:51:47.500 | WARNING  | index:search_result:57 - feature dim must be 2, will force reshape
+2022-11-23 10:51:47.501 | INFO     | base.utils:inner:19 - 函数[face_recognize_sub]耗时：0.05308s
+2022-11-23 10:51:47.509 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/face_recognize  |IP:127.0.0.1
+2022-11-23 10:51:47.551 | WARNING  | index:search_result:57 - feature dim must be 2, will force reshape
+2022-11-23 10:51:47.551 | INFO     | base.utils:inner:19 - 函数[face_recognize_sub]耗时：0.039225s
+2022-11-23 10:51:47.597 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/face_recognize  |IP:127.0.0.1
+2022-11-23 10:51:47.617 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/face_recognize  |IP:127.0.0.1
+2022-11-23 10:51:47.632 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/face_recognize  |IP:127.0.0.1
+2022-11-23 10:51:47.643 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/face_recognize  |IP:127.0.0.1
+2022-11-23 10:51:47.672 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/face_recognize  |IP:127.0.0.1
+2022-11-23 10:51:47.691 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/face_recognize  |IP:127.0.0.1
+2022-11-23 10:51:47.707 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/face_recognize  |IP:127.0.0.1
+2022-11-23 10:51:47.718 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/face_recognize  |IP:127.0.0.1
+2022-11-23 10:51:47.746 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/face_recognize  |IP:127.0.0.1
+2022-11-23 10:51:47.765 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/face_recognize  |IP:127.0.0.1
+2022-11-23 10:51:47.783 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/face_recognize  |IP:127.0.0.1
+2022-11-23 10:51:47.793 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/face_recognize  |IP:127.0.0.1
+2022-11-23 10:51:47.819 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/face_recognize  |IP:127.0.0.1
+2022-11-23 10:51:47.838 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/face_recognize  |IP:127.0.0.1
+2022-11-23 10:51:47.852 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/face_recognize  |IP:127.0.0.1
+2022-11-23 10:51:47.864 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/face_recognize  |IP:127.0.0.1
+2022-11-23 10:51:47.889 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/face_recognize  |IP:127.0.0.1
+2022-11-23 10:51:47.905 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/face_recognize  |IP:127.0.0.1
+2022-11-23 10:51:47.919 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/face_recognize  |IP:127.0.0.1
+2022-11-23 10:51:47.930 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/face_recognize  |IP:127.0.0.1
+2022-11-23 10:51:47.955 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/face_recognize  |IP:127.0.0.1
+2022-11-23 10:51:47.971 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/face_recognize  |IP:127.0.0.1
+2022-11-23 10:51:47.987 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/face_recognize  |IP:127.0.0.1
+2022-11-23 10:51:47.997 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/face_recognize  |IP:127.0.0.1
+2022-11-23 10:51:48.022 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/face_recognize  |IP:127.0.0.1
+2022-11-23 10:51:48.041 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/face_recognize  |IP:127.0.0.1
+2022-11-23 10:51:48.057 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/face_recognize  |IP:127.0.0.1
+2022-11-23 10:51:48.067 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/face_recognize  |IP:127.0.0.1
+2022-11-23 10:51:48.093 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/face_recognize  |IP:127.0.0.1
+2022-11-23 10:51:48.111 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/face_recognize  |IP:127.0.0.1
+2022-11-23 10:51:48.127 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/face_recognize  |IP:127.0.0.1
+2022-11-23 10:51:48.137 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/face_recognize  |IP:127.0.0.1
+2022-11-23 10:51:48.164 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/face_recognize  |IP:127.0.0.1
+2022-11-23 10:51:48.183 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/face_recognize  |IP:127.0.0.1
+2022-11-23 10:51:48.243 | WARNING  | index:search_result:57 - feature dim must be 2, will force reshape
+2022-11-23 10:51:48.243 | INFO     | base.utils:inner:19 - 函数[face_recognize_sub]耗时：0.054658s
+2022-11-23 10:51:48.257 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/face_recognize  |IP:127.0.0.1
+2022-11-23 10:51:48.319 | WARNING  | index:search_result:57 - feature dim must be 2, will force reshape
+2022-11-23 10:51:48.319 | INFO     | base.utils:inner:19 - 函数[face_recognize_sub]耗时：0.056132s
+2022-11-23 10:51:48.328 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/face_recognize  |IP:127.0.0.1
+2022-11-23 10:51:48.371 | WARNING  | index:search_result:57 - feature dim must be 2, will force reshape
+2022-11-23 10:51:48.371 | INFO     | base.utils:inner:19 - 函数[face_recognize_sub]耗时：0.04079s
+2022-11-23 10:51:48.396 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/face_recognize  |IP:127.0.0.1
+2022-11-23 10:51:48.483 | WARNING  | index:search_result:57 - feature dim must be 2, will force reshape
+2022-11-23 10:51:48.484 | INFO     | base.utils:inner:19 - 函数[face_recognize_sub]耗时：0.077852s
+2022-11-23 10:51:48.499 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/face_recognize  |IP:127.0.0.1
+2022-11-23 10:51:48.555 | WARNING  | index:search_result:57 - feature dim must be 2, will force reshape
+2022-11-23 10:51:48.555 | INFO     | base.utils:inner:19 - 函数[face_recognize_sub]耗时：0.051069s
+2022-11-23 10:51:48.568 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/face_recognize  |IP:127.0.0.1
+2022-11-23 10:51:48.579 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/face_recognize  |IP:127.0.0.1
+2022-11-23 10:51:48.606 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/face_recognize  |IP:127.0.0.1
+2022-11-23 10:51:48.624 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/face_recognize  |IP:127.0.0.1
+2022-11-23 10:51:48.640 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/face_recognize  |IP:127.0.0.1
+2022-11-23 10:51:48.651 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/face_recognize  |IP:127.0.0.1
+2022-11-23 10:51:48.677 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/face_recognize  |IP:127.0.0.1
+2022-11-23 10:51:48.695 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/face_recognize  |IP:127.0.0.1
+2022-11-23 10:51:48.711 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/face_recognize  |IP:127.0.0.1
+2022-11-23 10:51:48.722 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/face_recognize  |IP:127.0.0.1
+2022-11-23 10:51:48.749 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/face_recognize  |IP:127.0.0.1
+2022-11-23 10:51:48.769 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/face_recognize  |IP:127.0.0.1
+2022-11-23 10:51:48.787 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/face_recognize  |IP:127.0.0.1
+2022-11-23 10:51:48.796 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/face_recognize  |IP:127.0.0.1
+2022-11-23 10:51:48.826 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/face_recognize  |IP:127.0.0.1
+2022-11-23 10:51:48.844 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/face_recognize  |IP:127.0.0.1
+2022-11-23 10:51:48.859 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/face_recognize  |IP:127.0.0.1
+2022-11-23 10:51:48.872 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/face_recognize  |IP:127.0.0.1
+2022-11-23 10:51:48.897 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/face_recognize  |IP:127.0.0.1
+2022-11-23 10:51:48.915 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/face_recognize  |IP:127.0.0.1
+2022-11-23 10:51:48.930 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/face_recognize  |IP:127.0.0.1
+2022-11-23 10:51:48.941 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/face_recognize  |IP:127.0.0.1
+2022-11-23 10:51:48.967 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/face_recognize  |IP:127.0.0.1
+2022-11-23 10:51:48.983 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/face_recognize  |IP:127.0.0.1
+2022-11-23 10:51:49.002 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/face_recognize  |IP:127.0.0.1
+2022-11-23 10:51:49.013 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/face_recognize  |IP:127.0.0.1
+2022-11-23 10:51:49.038 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/face_recognize  |IP:127.0.0.1
+2022-11-23 10:51:49.057 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/face_recognize  |IP:127.0.0.1
+2022-11-23 10:51:49.072 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/face_recognize  |IP:127.0.0.1
+2022-11-23 10:51:49.084 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/face_recognize  |IP:127.0.0.1
+2022-11-23 10:51:49.111 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/face_recognize  |IP:127.0.0.1
+2022-11-23 10:51:49.132 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/face_recognize  |IP:127.0.0.1
+2022-11-23 10:51:49.147 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/face_recognize  |IP:127.0.0.1
+2022-11-23 10:51:49.158 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/face_recognize  |IP:127.0.0.1
+2022-11-23 10:51:49.186 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/face_recognize  |IP:127.0.0.1
+2022-11-23 10:51:49.293 | WARNING  | index:search_result:57 - feature dim must be 2, will force reshape
+2022-11-23 10:51:49.294 | INFO     | base.utils:inner:19 - 函数[face_recognize_sub]耗时：0.096475s
+2022-11-23 10:51:49.320 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/face_recognize  |IP:127.0.0.1
+2022-11-23 10:51:49.418 | WARNING  | index:search_result:57 - feature dim must be 2, will force reshape
+2022-11-23 10:51:49.418 | INFO     | base.utils:inner:19 - 函数[face_recognize_sub]耗时：0.089903s
+2022-11-23 10:51:49.437 | INFO     | base.middleware:logger_request:88 - |访问记录:POST  |url:http://localhost:9026/face_recognize  |IP:127.0.0.1
+2022-11-23 10:51:49.496 | WARNING  | index:search_result:57 - feature dim must be 2, will force reshape
+2022-11-23 10:51:49.497 | INFO     | base.utils:inner:19 - 函数[face_recognize_sub]耗时：0.053302s

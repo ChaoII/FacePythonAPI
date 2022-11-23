@@ -31,7 +31,7 @@ def test_delete_face(id_: str):
 
 
 def test_face_recognize(imgpath):
-    url = "http://127.0.0.1:9026/face_recognize"
+    url = "http://localhost:9026/face_recognize"
     img = cv2.imread(imgpath)
     image = image_to_base64(img)
     data = {"imageBase64": image}

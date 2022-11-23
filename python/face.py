@@ -3,6 +3,7 @@ import cv2
 import pickle
 import numpy as np
 import os.path as oph
+from base.utils import run_time
 from base.log import logger
 from base.config import settings
 from api.faceapi import SeetaFace
@@ -37,6 +38,7 @@ class FaceAPI:
         if not os.path.exists(self.INDEX_DIR):
             os.mkdir(self.INDEX_DIR)
 
+    @run_time
     def init_model(self):
         model_dir = os.path.join(settings.BASE_DIR, "model")
         if not os.path.exists(model_dir):
@@ -59,6 +61,7 @@ class FaceAPI:
         # 初始化阶段构建索引库
         self.index_manager.build_index(self.FACE_FEATURE_LIBS)
 
+    @run_time
     async def register_face_sub(self, face, uid: str, name: str = None):
         if isinstance(face, np.ndarray):
             img = face.copy()
@@ -97,6 +100,7 @@ class FaceAPI:
         cv2.imwrite(img_path, img)
         return 0
 
+    @run_time
     async def delete_face_sub(self, uid: str):
         face = await FaceInfo.filter(uid=uid).first()
         if face is not None:
@@ -118,6 +122,7 @@ class FaceAPI:
             logger.warning("人脸不存在，uid :" + uid)
             return -1
 
+    @run_time
     def face_recognize_sub(self, img: np.ndarray):
         det_result = self.seetaFace.Detect(img)
         if det_result.size == 0:

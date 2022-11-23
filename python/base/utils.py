@@ -1,4 +1,5 @@
 import hashlib
+import time
 import cv2
 import base64
 import numpy as np
@@ -7,6 +8,18 @@ from base.log import logger
 fontFace = cv2.FONT_HERSHEY_COMPLEX_SMALL
 fontScale = 0.6
 thickness = 1
+
+
+def run_time(func):
+    def inner(*arg, **kwarg):
+        s_time = time.time()
+        res = func(*arg, **kwarg)
+        e_time = time.time()
+        total_time = round(e_time - s_time, 6)
+        logger.info(f'函数[{func.__name__}]耗时：{total_time}s')
+        return res
+
+    return inner
 
 
 def md5value(s):
