@@ -76,7 +76,6 @@ async def delete_face(request: Request, uid: str = Body(..., embed=True)):
 @app.post("/face_recognize")
 @limiter.limit("5/second")
 async def face_recognize(request: Request, image: str = Body(..., embed=True, alias="imageBase64")):
-
     image = base64_to_image(image)
     if image is None:
         return {"code": -1, "data": {}, "msg": "未知异常! 请确认人脸完全在人脸遮罩内"}
@@ -100,5 +99,4 @@ async def get_face_library(request: Request, uid: Optional[str] = Body(None, emb
         data = await FaceInfo.all()
     else:
         data = await FaceInfo.filter(uid=uid).all()
-    return {"code": 0, "data": {"result": data}, "msg": "人脸识别成功!"}
-
+    return {"code": 0, "data": {"result": data}, "msg": "人脸信息查询成功!"}

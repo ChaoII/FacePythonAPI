@@ -16,6 +16,8 @@ class IndexManager:
         self.index_method = settings.INDEX_METHOD
         self.top_k = settings.TOP_K
         self.index = None
+        if os.path.exists(self.index_path):
+            self.index = faiss.read_index(self.index_path)
 
     def _save_index(self):
         if self.index is None:
@@ -57,6 +59,7 @@ class IndexManager:
             logger.warning("feature dim must be 2, will force reshape")
         feature = feature.reshape((-1, self.embedding_size))
         if self.index is None:
+            logger.error("index is None please create index firstly")
             return
         distance, index = self.index.search(feature, self.top_k)
         return distance, index

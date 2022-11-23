@@ -150,7 +150,11 @@ class FaceAPI:
                 return -2
         feature = self.seetaFace.Extract(img, points)
         # 向量查找[HNSW32]以空间换时间，召回率高
-        distances, indexs = self.index_manager.search_result(self.seetaFace.get_feature_numpy(feature))
+        ret = self.index_manager.search_result(self.seetaFace.get_feature_numpy(feature))
+        if ret is None:
+            logger.warning("人脸索引异常...")
+            return -1
+        distances, indexs = ret
         # 阈值
         if distances[0][0] > settings.REC_THRESHOLD:
             uid = str(indexs[0][0])
