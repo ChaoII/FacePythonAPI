@@ -15,6 +15,7 @@ from base.middleware import (register_offline_docs,
                              register_limit,
                              register_cors)
 
+face_api = FaceAPI()
 # 必须在app实例化之前进行注册
 register_offline_docs(applications)
 # 实例化app
@@ -27,8 +28,6 @@ register_cors(app)
 register_exception(app)
 limiter = register_limit(app)
 register_middleware(app)
-
-face_api = FaceAPI()
 
 
 @app.on_event("startup")
