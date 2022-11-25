@@ -10,12 +10,12 @@ serving/models/DB.sqlite
 serving/models/DB.sqlite-shm
 serving/models/DB.sqlite-wal
 serving/config.yml
-python/facelib/images/*.jpg
+serving/facelib/images/*.jpg
 serving/logs/*
-python/facelib/index/*.index
-python/facelib/*.pkl
+serving/facelib/index/*.index
+serving/facelib/*.pkl
 serving/d.py
 serving/model/*
 serving/lib/*
 serving/test/apitest.py
-python/faceapi/libs/lib*
+python/faceapi/libs/*
