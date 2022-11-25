@@ -2,7 +2,15 @@
 
 #include <iostream>
 #include <sstream>
-
+#if defined(_WIN32)
+#ifdef FACE_LIB
+#define FACEAPI __declspec(dllexport)
+#else
+#define FACEAPI __declspec(dllimport)
+#endif  // FACE_LIB
+#else
+#define FACEAPI __attribute__((visibility("default")))
+#endif  // _WIN32
 class FRLogger {
 public:
     FRLogger() {
