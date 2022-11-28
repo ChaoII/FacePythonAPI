@@ -11,7 +11,7 @@
 #else
 #define FACEAPI __attribute__((visibility("default")))
 #endif  // _WIN32
-class FRLogger {
+class FACEAPI FRLogger {
 public:
     FRLogger() {
         line_ = "";

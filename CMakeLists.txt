@@ -2,12 +2,20 @@ cmake_minimum_required(VERSION 3.12)
 project(FaceAPI)
 set(CMAKE_CXX_STANDARD 11)
 set(LIBRARY_NAME FaceAPI)
-set(PY_LIBRARY_NAME PYFaceAPI)
-option(BUILD_PYTHON "" ON)
-option(USE_GPU "" OFF)
+set(PY_LIBRARY_NAME "" CACHE STRING "python library name")
+if (NOT PY_LIBRARY_NAME)
+    set(PY_LIBRARY_NAME pyfaceapi)
+endif ()
+
+
+option(BUILD_PYTHON "" OFF)
+option(BUILD_WITH_GPU "" OFF)
 set(CUDA_DIR "" CACHE PATH "If build tensorrt backend, need to define path of cuda library.")
-message(STATUS "USE GPU: ${USE_GPU}")
-add_compile_options(-fpic -O2)
+message(STATUS "BUILD_WITH_GPU: ${BUILD_WITH_GPU}")
+set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS} -O2")
+if (NOT WIN32)
+    set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS}  -fpic")
+endif ()
 
 find_package(OpenMP)
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${OpenMP_C_FLAGS}")
@@ -26,7 +34,7 @@ file(GLOB_RECURSE CAPI_SRC ${CMAKE_CURRENT_SOURCE_DIR}/src/capi/*.cpp)
 list(APPEND CSRCS ${CAPI_SRC})
 
 add_library(${LIBRARY_NAME} SHARED ${CSRCS})
-# 设置文件输出目录
+# 设置动态库文件输出目录
 if (WIN32)
     add_definitions(-DFACE_LIB)
     set(LIBRARY_OUTPUT_PATH ${CMAKE_BINARY_DIR}/lib/win)
@@ -39,29 +47,33 @@ else ()
 endif ()
 # seetaface
 include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/seetaface.cmake)
-if (USE_GPU)
-    set(USE_GPU true)
+# 配置config文件
+if (BUILD_WITH_GPU)
+    set(BUILD_WITH_GPU true)
     if (NOT CUDA_DIR)
-        message(FATAL "while USE GPU must define CUDA_DIR")
+        message(FATAL "while BUILD_WITH_GPU must define CUDA_DIR")
     endif ()
     message(STATUS "CUDA_DIR: ${CUDA_DIR}")
 else ()
-    set(USE_GPU false)
+    set(BUILD_WITH_GPU false)
 endif ()
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/serving/config.yml.in ${CMAKE_CURRENT_SOURCE_DIR}/serving/config.yml @ONLY)
 include_directories(${INC_DIR})
 if (APPLE)
     set_target_properties(${LIBRARY_NAME} PROPERTIES COMPILE_FLAGS "-fvisibility=hidden")
 elseif (MSVC)
-else ()
+elseif (UNIX AND NOT APPLE)
     set_target_properties(${LIBRARY_NAME} PROPERTIES COMPILE_FLAGS "-fvisibility=hidden")
     set_target_properties(${LIBRARY_NAME} PROPERTIES LINK_FLAGS "-Wl,--exclude-libs,ALL")
     set_target_properties(${LIBRARY_NAME} PROPERTIES LINK_FLAGS_RELEASE -s)
 endif ()
 target_link_libraries(${LIBRARY_NAME} ${DEPEND_LIBS})
-include(cmake/copyfile.cmake)
 
 if (BUILD_PYTHON)
+    configure_file(${CMAKE_CURRENT_SOURCE_DIR}/src/pybind/main.cpp.in
+            ${CMAKE_CURRENT_SOURCE_DIR}/src/pybind/main.cpp @ONLY)
+    configure_file(${CMAKE_CURRENT_SOURCE_DIR}/python/faceapi/c_lib_wrap.py.in
+            ${CMAKE_CURRENT_SOURCE_DIR}/python/faceapi/c_lib_wrap.py @ONLY)
     add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/third/pybind11)
     if (pybind11_FOUND)
         message(PYBIND11 FOUNDED)
@@ -72,6 +84,7 @@ if (BUILD_PYTHON)
     file(GLOB_RECURSE PYBIND_SRC ${PROJECT_SOURCE_DIR}/src/pybind/*.cpp)
     list(APPEND PYBIND_SRCS ${PYBIND_SRC})
     list(APPEND PYBIND_SRCS ${UTILS_SRC})
+
     if (MSVC)
         set(PY_EXT_SUFFIX ".pyd")
     elseif (APPLE)
@@ -100,7 +113,6 @@ if (BUILD_PYTHON)
     if (APPLE)
         set_target_properties(${PY_LIBRARY_NAME} PROPERTIES LINK_FLAGS "-undefined dynamic_lookup")
     endif ()
-
     target_link_libraries(${PY_LIBRARY_NAME} PUBLIC ${SEETAFACE_LIBS})
 
     if (MSVC)
@@ -116,4 +128,25 @@ if (BUILD_PYTHON)
                 ${EXTRA_FLAGS})
         target_compile_options(${PY_LIBRARY_NAME} PRIVATE $<$<NOT:$<CONFIG:Debug>>:/MT> $<$<CONFIG:Debug>:/MTd>)
     endif ()
+    file(REMOVE_RECURSE ${PROJECT_SOURCE_DIR}/python/faceapi/libs)
+    file(MAKE_DIRECTORY ${PROJECT_SOURCE_DIR}/python/faceapi/libs)
+    if (WIN32)
+        add_custom_command(
+                TARGET ${PY_LIBRARY_NAME} POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_directory
+                ${LIBRARY_OUTPUT_PATH}
+                ${PROJECT_SOURCE_DIR}/python/faceapi/libs/
+        )
+    elseif (APPLE)
+        add_custom_target(copy_libraries ALL COMMAND ${CMAKE_COMMAND} -E copy
+                ${LIBRARY_OUTPUT_PATH}/*.so**
+                ${LIBRARY_OUTPUT_PATH}/*.dylib**
+                ${PROJECT_SOURCE_DIR}/python/faceapi/libs/
+                DEPENDS ${PY_LIBRARY_NAME})
+    else ()
+        add_custom_target(copy_libraries ALL COMMAND ${CMAKE_COMMAND} -E copy
+                ${LIBRARY_OUTPUT_PATH}/*.so*
+                ${PROJECT_SOURCE_DIR}/python/faceapi/libs/
+                DEPENDS ${PY_LIBRARY_NAME})
+    endif ()
+
 endif (BUILD_PYTHON)

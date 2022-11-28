@@ -28,6 +28,7 @@ def md5value(s):
     return md5.hexdigest()
 
 
+@run_time
 def image_to_base64(image_np):
     """
     将np图片(imread后的图片）转码为base64格式
@@ -40,6 +41,7 @@ def image_to_base64(image_np):
     return image_code
 
 
+@run_time
 def base64_to_image(base64_code: str):
     """
     将base64编码解析成opencv可用图片

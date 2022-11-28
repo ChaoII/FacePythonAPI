@@ -16,7 +16,7 @@ base:
 face:
   rec_threshold: 0.7
   is_anti_spoof: false
-  use_gpu: @USE_GPU@
+  use_gpu: @BUILD_WITH_GPU@
   gpu_id: 0
   cuda_dir: "@CUDA_DIR@"
   tracking_size: [ 310,310 ]

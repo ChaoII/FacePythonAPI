@@ -4,11 +4,6 @@
 
 #include "src/pybind/main.h"
 
-
-
-
-
-
 void BindStruct(py::module &m) {
     py::class_<SeetaPoint>(m, "SeetaPoint")
             .def_readwrite("x", &SeetaPoint::x)

@@ -26,7 +26,7 @@ py::array_t<unsigned char> SeetaImageDataToPyArray(const SeetaImageData &data) {
 }
 
 
-PYBIND11_MODULE(PYFaceAPI, m) {
+PYBIND11_MODULE(py_faceapi, m) {
     m.doc() = "face api collection";
     BindStruct(m);
     BindFaceAPI(m);

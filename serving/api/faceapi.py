@@ -14,16 +14,13 @@ if settings.USE_GPU:
         logger.error("开启GPU情况下请设置好cuda目录")
         exit(-1)
     os.add_dll_directory(settings.CUDA_DIR)
-
+LIB_PATH = os.path.join(settings.BASE_DIR, "lib")
 if "windows" in _platform_name:
-    LIB_PATH = os.path.join(settings.BASE_DIR, "lib", "win")
     os.environ["PATH"] += os.pathsep + LIB_PATH
     dll = CDLL(os.path.join(LIB_PATH, "FaceAPI.dll"))
 elif "linux" in _platform_name:
-    LIB_PATH = os.path.join(settings.BASE_DIR, "lib", "linux")
     dll = CDLL(os.path.join(LIB_PATH, "libFaceAPI.so"))
 elif "macos" in _platform_name:
-    LIB_PATH = os.path.join(settings.BASE_DIR, "lib", "mac")
     dll = CDLL(os.path.join(LIB_PATH, "libFaceAPI.dylib"))
 else:
     logger.error("unsupported this system")

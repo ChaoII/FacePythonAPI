@@ -22,7 +22,7 @@
 #include <seeta/FaceRecognizer.h>      //人脸识别
 #include <seeta/FaceTracker.h>         //人脸跟踪
 
-class FaceAPI {
+class FACEAPI FaceAPI {
 
 public:
     FaceAPI(const std::string &model_dir,

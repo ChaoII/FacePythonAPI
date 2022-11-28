@@ -20,27 +20,24 @@ include_directories(${SEETAFACE_INC_DIR})
 list(APPEND DEPEND_LIBS ${SEETAFACE_LIBS})
 # 拷贝文件
 if (WIN32)
-    file(GLOB SEETAFACE_LIBS ${DEP_LIBS_DIR}/*.dll)
+    # 拷贝dll
+    file(GLOB SEETAFACE_SHARED_LIBS ${DEP_LIBS_DIR}/*.dll)
+    file(COPY ${SEETAFACE_SHARED_LIBS} DESTINATION ${LIBRARY_OUTPUT_PATH} FOLLOW_SYMLINK_CHAIN)
+else ()
+    file(COPY ${SEETAFACE_LIBS} DESTINATION ${LIBRARY_OUTPUT_PATH} FOLLOW_SYMLINK_CHAIN)
 endif ()
-file(COPY ${SEETAFACE_LIBS} DESTINATION ${LIBRARY_OUTPUT_PATH} FOLLOW_SYMLINK_CHAIN)
 
-if (USE_GPU)
+if (BUILD_WITH_GPU)
     if (WIN32)
         add_custom_command(
                 TARGET ${PROJECT_NAME} POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy
                 ${LIBRARY_OUTPUT_PATH}/tennis_gpu.dll ${LIBRARY_OUTPUT_PATH}/tennis.dll)
-        add_custom_command(
-                TARGET ${PROJECT_NAME} POST_BUILD COMMAND ${CMAKE_COMMAND} -E rm -rf
-                ${LIBRARY_OUTPUT_PATH}/tennis_gpu.dll)
     elseif (UNIX AND NOT APPLE)
         add_custom_command(
                 TARGET ${PROJECT_NAME} POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy
                 ${LIBRARY_OUTPUT_PATH}/libtennis_gpu.so ${LIBRARY_OUTPUT_PATH}/libtennis.so)
-        add_custom_command(
-                TARGET ${PROJECT_NAME} POST_BUILD COMMAND ${CMAKE_COMMAND} -E rm -rf
-                ${LIBRARY_OUTPUT_PATH}/libtennis_gpu.so)
     else ()
         message(WARNING "GPU is supported only by windows and linux , USE_GPU will be turn off")
-        set(USE_GPU OFF)
+        set(BUILD_WITH_GPU OFF)
     endif ()
 endif ()

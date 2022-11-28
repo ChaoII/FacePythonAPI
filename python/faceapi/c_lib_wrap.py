@@ -4,7 +4,6 @@ import sys
 
 
 def add_system_search_paths():
-    # TODO(qiuyanjun): add Linux system paths
     sys_paths = os.environ["path"].strip().split(";")
     for sys_path in sys_paths:
         if os.path.exists(sys_path) and sys.version_info[:2] >= (3, 8):
@@ -22,6 +21,6 @@ def add_dll_search_dir(dir_path):
 
 
 try:
-    from .libs.PYFaceAPI import *
+    from .libs.py_faceapi import *
 except:
     raise RuntimeError("FaceAPI initialized failed!")
