@@ -20,13 +20,13 @@
 - CMake
 - 各平台的编译工具
 - 具体安装方式不在本文档的说明范畴内
-### 4.1 拉取源码
+### 4.2 拉取源码
 ```bash
 git clone --recursive https://github.com/ChaoII/FacePythonAPI.git
 ```
 仓库包含部分二进制文件，可能比较大，如果拉不下来，请自行百度
 其中--recursive 可以同步拉取pybind11项目子模块
-### 4.2 CPU版本编译
+### 4.3 CPU版本编译
 其中项目CPU、GPU主要依赖于tennis引擎，但是选择不同的编译方式可以自动的进行库的选择，并添加cuda路径配置
 ```bash
 cmake ..
@@ -34,7 +34,7 @@ cmake --build . --config Release --target FaceAPI -j4
 ```
 其中cmake .. 后面可跟-G参数指定生成器，如果不会请自行参考百度
 **Note:**windows 上如果是MSVC请打开VS开发命令提示符，执行上述命令，别傻乎乎的打开IDE折腾
-### 4.3 GPU版本
+### 4.4 GPU版本
 ```
 cmake .. -DBUILD_WITH_GPU=ON -DCUDA_DIR="xxx"
 cmake --build . --config Release --target FaceAPI -j4
@@ -71,7 +71,7 @@ sudo echo  ${编译目录}/lib/linux  > /etc/ld.so.conf.d/facepythonapi.conf
 sudo ldconfig    
 ``` 
 windows下将依赖库文件放在与编译生成的FaceAPI.dll同目录即可
-### 5.3 示例代码
+### 5.4 示例代码
 部分代码如下，想看更详细使用方式(查看[serving 使用方式](./serving/README.md)或者查看api.py文档
 ```python
 import os
