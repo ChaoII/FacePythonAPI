@@ -18,6 +18,7 @@ serving/d.py
 serving/model/*
 serving/lib/*
 serving/test/apitest.py
+serving/offline
 src/pybind/main.cpp
 python/faceapi/libs/*
 python/faceapi/c_lib_wrap.py
