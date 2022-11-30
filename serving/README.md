@@ -70,9 +70,8 @@ export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:${seetaFace6Python目录路径}/seetafac
 sudo echo  ${编译目录}/lib/linux  > /etc/ld.so.conf.d/facepythonapi.conf
 sudo ldconfig    
 ``` 
-windows下将依赖库文件放在与编译生成的FaceAPI.dll同目录即可
 ### 5.3 示例代码
-部分代码如下，想看更详细使用方式(查看[serving 使用方式](./serving/README.md)或者查看api.py文档
+部分代码如下，想看更详细使用方式(查看[serving 使用方式](./serving/README)或者查看api.py文档
 ```python
 import os
 import cv2
