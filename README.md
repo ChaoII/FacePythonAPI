@@ -72,7 +72,7 @@ sudo ldconfig
 ``` 
 `windows`下将依赖库文件放在与编译生成的`FaceAPI.dll`同目录即可
 ### 5.4 示例代码
-部分代码如下，想看更详细使用方式(查看[serving 使用方式](./serving/README.md)或者查看`api.py`文档
+部分代码如下（想看更详细使用方式,，请查看[serving 使用方式](./serving/README.md)或者查看`api.py`文档）：
 ```python
 import os
 import cv2
