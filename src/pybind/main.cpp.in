@@ -19,7 +19,7 @@ void PyArrayToSeetaImageData(py::array_t<unsigned char> pyarray, SeetaImageData 
 py::array_t<unsigned char> SeetaImageDataToPyArray(const SeetaImageData &data) {
 
     std::vector<int> shape = {data.height, data.width, data.channels};
-    int size = std::accumulate(shape.begin(), shape.end(), 1, std::multiplies<int>());
+    int size = std::accumulate(shape.begin(), shape.end(), 1, std::multiplies<>());
     auto out = pybind11::array_t<unsigned char>(shape);
     memcpy(out.mutable_data(), data.data, size);
     return out;
