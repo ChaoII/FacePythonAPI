@@ -18,5 +18,11 @@ serving/d.py
 serving/model/*
 serving/lib/*
 serving/test/apitest.py
-python/faceapi/libs/*
 src/pybind/main.cpp
+python/faceapi/libs/*
+python/faceapi/c_lib_wrap.py
+python/.setuptools-cmake-build
+python/*.egg-info
+python/build
+python/dist
+python/ttt.py

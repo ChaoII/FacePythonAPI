@@ -1,5 +1,0 @@
-G:/FacePythonAPI/python/.setuptools-cmake-build/CMakeFiles/FaceAPI.dir
-G:/FacePythonAPI/python/.setuptools-cmake-build/CMakeFiles/py_faceapi.dir
-G:/FacePythonAPI/python/.setuptools-cmake-build/CMakeFiles/ALL_BUILD.dir
-G:/FacePythonAPI/python/.setuptools-cmake-build/CMakeFiles/ZERO_CHECK.dir
-G:/FacePythonAPI/python/.setuptools-cmake-build/third/pybind11/CMakeFiles/ALL_BUILD.dir

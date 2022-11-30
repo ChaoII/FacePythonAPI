@@ -1,8 +1,0 @@
-setup.py
-faceapi/__init__.py
-faceapi/c_lib_wrap.py
-faceapi_python.egg-info/PKG-INFO
-faceapi_python.egg-info/SOURCES.txt
-faceapi_python.egg-info/dependency_links.txt
-faceapi_python.egg-info/requires.txt
-faceapi_python.egg-info/top_level.txt
