@@ -35,7 +35,7 @@ cmake --build . --config Release --target FaceAPI -j4
 其中`cmake ..`后面可跟`-G`参数指定生成器，如果不会请自行参考百度</br>
 **注意 :** `windows`上如果是`MSVC`请打开`VS`开发命令提示符，执行上述命令，别傻乎乎的打开`IDE`折腾.
 ### 4.4 GPU版本
-```
+```bash
 cmake .. -DBUILD_WITH_GPU=ON -DCUDA_DIR="xxx"
 cmake --build . --config Release --target FaceAPI -j4
 ```
