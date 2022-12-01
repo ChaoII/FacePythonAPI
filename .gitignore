@@ -27,3 +27,4 @@ python/*.egg-info
 python/build
 python/dist
 python/ttt.py
+python/config.yml
