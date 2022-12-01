@@ -6,9 +6,9 @@ bin
 build/lib
 .cmake
 .DS_Store
-#serving/models/DB.sqlite
-#serving/models/DB.sqlite-shm
-#serving/models/DB.sqlite-wal
+serving/models/DB.sqlite
+serving/models/DB.sqlite-shm
+serving/models/DB.sqlite-wal
 serving/config.yml
 serving/facelib/images/*.jpg
 serving/logs/*
