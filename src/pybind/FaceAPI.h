@@ -203,6 +203,15 @@ private:
     /// 人脸完整性评估
     void initial_integrity();
 
+    /// 对象查验
+    template<class T>
+    void check(const T *detector, const std::string &detector_name) {
+        if (detector == nullptr) {
+            FRERROR << detector_name << " don't initial, please initial<< detector_name <<firstly!" << std::endl;
+            exit(-1);
+        }
+    }
+
 private:
     seeta::FaceDetector *faceDetector = nullptr;           //人脸框
     seeta::FaceLandmarker *landDetector5 = nullptr;        //5特征点

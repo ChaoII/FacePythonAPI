@@ -169,70 +169,72 @@ void Init_recognition() {
 int Init(int func) {
     if (func == 0) {
         Init_face();
-        FRINFO << "Init_face" << endl;
+        FRINFO << "init face detector successfully!" << endl;
         return 0;
     } else if (func == 1) {
         Init_land5();
-        FRINFO << "Init_land5" << endl;
+        FRINFO << "init face landmark5 successfully!" << endl;
         return 0;
     } else if (func == 2) {
-        Init_land68();
-        FRINFO << "Init_land68" << endl;
+        Init_recognition();
+        FRINFO << "initial recognition successfully!" << endl;
         return 0;
     } else if (func == 3) {
-        Init_live(); //成功
-        FRINFO << "Init_live" << endl;
+        Init_live();
+        FRINFO << "initial live detector successfully!" << endl;
         return 0;
     } else if (func == 4) {
-        Init_faceMask(); //成功
-        FRINFO << "Init_faceMask" << endl;
+        Init_faceMask();
+        FRINFO << "initial face mask successfully!" << endl;
         return 0;
     } else if (func == 5) {
         Init_age(); //成功
-        FRINFO << "Init_age" << endl;
+        FRINFO << "initial age detector successfully!" << endl;
         return 0;
     } else if (func == 6) {
         Init_gender(); //成功
-        FRINFO << "Init_gender" << endl;
+        FRINFO << "init gender detector successfully!" << endl;
         return 0;
     } else if (func == 7) {
         Init_mask(); //成功
-        FRINFO << "Init_mask" << endl;
+        FRINFO << "initial landmark mask successfully!" << endl;
         return 0;
     } else if (func == 8) {
         Init_eyeState(); //成功
-        FRINFO << "Init_eyeState" << endl;
+        FRINFO << "initial eye state detector successfully!" << endl;
         return 0;
     } else if (func == 9) {
         Init_clarity(); //成功
-        FRINFO << "Init_clarity" << endl;
+        FRINFO << "initial clarity evaluation successfully!" << endl;
         return 0;
     } else if (func == 10) {
         Init_bright(); //成功
-        FRINFO << "Init_bright" << endl;
+        FRINFO << "initial bright evaluation successfully!" << endl;
         return 0;
     } else if (func == 11) {
         Init_resolution(); //成功
-        FRINFO << "Init_resolution" << endl;
+        FRINFO << "initial resolution evaluation successfully!" << endl;
         return 0;
     } else if (func == 12) {
         Init_pose(); //成功
-        FRINFO << "Init_pose" << endl;
+        FRINFO << "initial  pose evaluation successfully!" << endl;
         return 0;
     } else if (func == 13) {
         Init_integrity(); //成功
-        FRINFO << "Init_integrity" << endl;
+        FRINFO << "initial face integrity evaluation successfully！" << endl;
         return 0;
     } else if (func == 14) {
         Init_faceTrack(); //成功
-        FRINFO << "Init_faceTrack" << endl;
+        FRINFO << "initial face track successfully!" << endl;
         return 0;
     } else if (func == 15) {
-        Init_recognition(); //人脸识别
-        FRINFO << "Init_recognition" << endl;
+        Init_land68();
+        FRINFO << "init face landmark68 successfully!" << endl;
         return 0;
-    } else
+    } else {
+        FRERROR << "unsupported this function,function id is: " << func << std::endl;
         return -1;
+    }
 }
 
 

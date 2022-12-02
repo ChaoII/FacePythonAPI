@@ -29,7 +29,7 @@ else:
 # 由于传递int数组比较方便,所以把字符串映射给int
 func_dict = {"FACE_DETECT": 0,
              "LANDMARKER5": 1,
-             "LANDMARKER68": 2,
+             "FACE_RECOGNITION": 2,
              "LIVENESS": 3,
              "LANDMARKER_MASK": 4,
              "FACE_AGE": 5,
@@ -42,7 +42,7 @@ func_dict = {"FACE_DETECT": 0,
              "FACE_POSE": 12,
              "FACE_INTEGRITY": 13,
              "FACE_TRACK": 14,
-             "FACE_RECOGNITION": 15}
+             "LANDMARKER68": 15}
 
 
 # 人脸检测器属性设置枚举

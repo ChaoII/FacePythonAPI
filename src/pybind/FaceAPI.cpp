@@ -169,54 +169,54 @@ void FaceAPI::init_engine(const std::vector<int> &model_ids) {
     for (auto &model_id: model_ids) {
         if (model_id == 0) {
             initial_detector();
-            FRINFO << "Init_face" << endl;
+            FRINFO << "init face detector successfully!" << endl;
         } else if (model_id == 1) {
             initial_landmark5();
-            FRINFO << "Init_land5" << endl;
+            FRINFO << "init face landmark5 successfully!" << endl;
         } else if (model_id == 2) {
-            initial_landmark68();
-            FRINFO << "Init_land68" << endl;
-        } else if (model_id == 3) {
-            initial_live(); //成功
-            FRINFO << "Init_live" << endl;
-        } else if (model_id == 4) {
-            initial_facemask(); //成功
-            FRINFO << "Init_faceMask" << endl;
-        } else if (model_id == 5) {
-            initial_age(); //成功
-            FRINFO << "Init_age" << endl;
-        } else if (model_id == 6) {
-            initial_gender(); //成功
-            FRINFO << "Init_gender" << endl;
-        } else if (model_id == 7) {
-            initial_mask(); //成功
-            FRINFO << "Init_mask" << endl;
-        } else if (model_id == 8) {
-            initial_eyes(); //成功
-            FRINFO << "Init_eyeState" << endl;
-        } else if (model_id == 9) {
-            initial_clarity(); //成功
-            FRINFO << "Init_clarity" << endl;
-        } else if (model_id == 10) {
-            initial_bright(); //成功
-            FRINFO << "Init_bright" << endl;
-        } else if (model_id == 11) {
-            initial_resolution(); //成功
-            FRINFO << "Init_resolution" << endl;
-        } else if (model_id == 12) {
-            initial_pose(); //成功
-            FRINFO << "Init_pose" << endl;
-        } else if (model_id == 13) {
-            initial_integrity(); //成功
-            FRINFO << "Init_integrity" << endl;
-        } else if (model_id == 14) {
-            initial_tracking(); //成功
-            FRINFO << "Init_faceTrack" << endl;
-        } else if (model_id == 15) {
             initial_recognition(); //人脸识别
-            FRINFO << "Init_recognition" << endl;
+            FRINFO << "initial recognition successfully!" << endl;
+        } else if (model_id == 3) {
+            initial_live();
+            FRINFO << "initial live detector successfully!" << endl;
+        } else if (model_id == 4) {
+            initial_facemask();
+            FRINFO << "initial face mask successfully!" << endl;
+        } else if (model_id == 5) {
+            initial_age();
+            FRINFO << "initial age detector successfully!" << endl;
+        } else if (model_id == 6) {
+            initial_gender();
+            FRINFO << "init gender detector successfully!" << endl;
+        } else if (model_id == 7) {
+            initial_mask();
+            FRINFO << "initial landmark mask successfully!" << endl;
+        } else if (model_id == 8) {
+            initial_eyes();
+            FRINFO << "initial eye state detector successfully!" << endl;
+        } else if (model_id == 9) {
+            initial_clarity();
+            FRINFO << "initial clarity evaluation successfully!" << endl;
+        } else if (model_id == 10) {
+            initial_bright();
+            FRINFO << "initial bright evaluation successfully!" << endl;
+        } else if (model_id == 11) {
+            initial_resolution();
+            FRINFO << "initial resolution evaluation successfully!" << endl;
+        } else if (model_id == 12) {
+            initial_pose();
+            FRINFO << "initial  pose evaluation successfully!" << endl;
+        } else if (model_id == 13) {
+            initial_integrity();
+            FRINFO << "initial face integrity evaluation successfully！" << endl;
+        } else if (model_id == 14) {
+            initial_tracking();
+            FRINFO << "initial face track successfully!" << endl;
+        } else if (model_id == 15) {
+            initial_landmark68();
+            FRINFO << "init face landmark68 successfully!" << endl;
         } else {
-            FRERROR << "unsupported this function,function id is" << model_id << std::endl;
+            FRERROR << "unsupported this function,function id is: " << model_id << std::endl;
         }
     }
 }
@@ -247,16 +247,19 @@ void FaceAPI::SetProperty(int property, float value) {
 //5特征点检测
 std::vector<SeetaPointF> FaceAPI::mark5(const SeetaImageData &simage,
                                         const SeetaRect &box) {
+    check<seeta::FaceLandmarker>(landDetector5, "face landmark5");
     return landDetector5->mark(simage, box);
 }
 
 //68特征点检测
 std::vector<SeetaPointF> FaceAPI::mark68(const SeetaImageData &simage,
                                          const SeetaRect &box) {
+    check<seeta::FaceLandmarker>(landDetector68, "face landmark68");
     return landDetector68->mark(simage, box);
 }
 
 void FaceAPI::SetLiveThreshold(float clarity, float reality) {
+    check<seeta::FaceAntiSpoofing>(liveDetector, "live detector");
     liveDetector->SetThreshold(clarity, reality);
 }
 
@@ -265,6 +268,7 @@ int FaceAPI::AliveDetect(const SeetaImageData &simage,
                          const SeetaRect &box,
                          const std::vector<SeetaPointF> &points5) {
 
+    check<seeta::FaceAntiSpoofing>(liveDetector, "live detector");
     auto status = liveDetector->Predict(simage, box, points5.data());
     int ret = int(status);
     return ret; //=0真实,1攻击,2不确定
@@ -272,6 +276,7 @@ int FaceAPI::AliveDetect(const SeetaImageData &simage,
 
 ///活体检测-返回清晰度跟活体值
 void FaceAPI::GetAliveScore(float *clarity, float *reality) {
+    check<seeta::FaceAntiSpoofing>(liveDetector, "live detector");
     liveDetector->GetPreFrameScore(clarity, reality);
 }
 
@@ -279,6 +284,7 @@ void FaceAPI::GetAliveScore(float *clarity, float *reality) {
 int FaceAPI::VideoAliveDetect(const SeetaImageData &simage,
                               const SeetaRect &box,
                               const std::vector<SeetaPointF> &points5) {
+    check<seeta::FaceAntiSpoofing>(liveDetector, "live detector");
     auto status = liveDetector->Predict(simage, box, points5.data());
     int ret = int(status);
     return ret; //=0真实,1攻击,2不确定
@@ -286,25 +292,29 @@ int FaceAPI::VideoAliveDetect(const SeetaImageData &simage,
 
 ///视频活体检测重置
 void FaceAPI::ResetVideoAlive() {
+    check<seeta::FaceAntiSpoofing>(liveDetector, "live detector");
     liveDetector->ResetVideo();
 }
 
 ///五官遮挡检测,
 std::vector<seeta::FaceLandmarker::PointWithMask>
 FaceAPI::markMask(const SeetaImageData &simage, const SeetaRect &box) {
-    return faceMaskDetector->mark_v2(simage, box);
 
+    check<seeta::FaceLandmarker>(faceMaskDetector, "face mask detector");
+    return faceMaskDetector->mark_v2(simage, box);
 }
 
 ///年龄检测
 int FaceAPI::PredictAgeWithCrop(const SeetaImageData &simage,
                                 const std::vector<SeetaPointF> &points5) {
+    check<seeta::AgePredictor>(agePredictor, "age predictor");
     int age = 0;
     agePredictor->PredictAgeWithCrop(simage, points5.data(), age);
     return age;
 }
 
 int FaceAPI::PredictAge(const SeetaImageData &simage) {
+    check<seeta::AgePredictor>(agePredictor, "age predictor");
     int age = 0;
     agePredictor->PredictAge(simage, age);
     return age;
@@ -313,6 +323,7 @@ int FaceAPI::PredictAge(const SeetaImageData &simage) {
 ///性别检测
 int FaceAPI::PredictGenderWithCrop(const SeetaImageData &simage,
                                    const std::vector<SeetaPointF> &points5) {
+    check<seeta::GenderPredictor>(genderPredictor, "gender predictor");
     seeta::GenderPredictor::GENDER gender;
     int genderOut = 0;
     genderPredictor->PredictGenderWithCrop(simage, points5.data(), gender);
@@ -322,6 +333,7 @@ int FaceAPI::PredictGenderWithCrop(const SeetaImageData &simage,
 }
 
 int FaceAPI::PredictGender(const SeetaImageData &simage) {
+    check<seeta::GenderPredictor>(genderPredictor, "gender predictor");
     seeta::GenderPredictor::GENDER gender;
     int genderOut = 0;
     genderPredictor->PredictGender(simage, gender);
@@ -332,6 +344,7 @@ int FaceAPI::PredictGender(const SeetaImageData &simage) {
 
 ///口罩检测
 int FaceAPI::DetectMask(const SeetaImageData &simage, const SeetaRect &box) {
+    check<seeta::MaskDetector>(maskDetector, "mask detector");
     float score = 0;
     bool mask = maskDetector->detect(simage, box, &score);
     return int(mask);
@@ -340,6 +353,7 @@ int FaceAPI::DetectMask(const SeetaImageData &simage, const SeetaRect &box) {
 /// 人眼状态检测
 std::vector<int> FaceAPI::DectectEye(const SeetaImageData &simage,
                                      const std::vector<SeetaPointF> &points5) {
+    check<seeta::EyeStateDetector>(eyeStateDetector, "eye status detector");
     std::vector<int> states;
     seeta::EyeStateDetector::EYE_STATE left_eye, right_eye;
     eyeStateDetector->Detect(simage, points5.data(), left_eye, right_eye);
@@ -352,6 +366,7 @@ std::vector<int> FaceAPI::DectectEye(const SeetaImageData &simage,
 int
 FaceAPI::ClarityEvaluate(const SeetaImageData &simage, const SeetaRect &box,
                          const std::vector<SeetaPointF> &points5) {
+    check<seeta::QualityRule>(qualityClarity, "clarity evaluation");
     //低中高
     vector<int> levels = {-1, 0, 1};
     seeta::QualityResult result = qualityClarity->check(simage, box, points5.data(), 5);
@@ -362,6 +377,7 @@ FaceAPI::ClarityEvaluate(const SeetaImageData &simage, const SeetaRect &box,
 int
 FaceAPI::BrightEvaluate(const SeetaImageData &simage, const SeetaRect &box,
                         const std::vector<SeetaPointF> &points5) {
+    check<seeta::QualityRule>(qualityBright, "bright evaluation");
     vector<int> levels = {-1, 0, 1};
     seeta::QualityResult result = qualityBright->check(simage, box, points5.data(), 5);
     return levels[result.level];
@@ -370,6 +386,7 @@ FaceAPI::BrightEvaluate(const SeetaImageData &simage, const SeetaRect &box,
 /// 分辨率评估
 int FaceAPI::ResolutionEvaluate(const SeetaImageData &simage, const SeetaRect &box,
                                 const std::vector<SeetaPointF> &points5) {
+    check<seeta::QualityRule>(qualityResolution, "resolution evaluation");
     vector<int> levels = {-1, 0, 1};
     seeta::QualityResult result = qualityResolution->check(simage, box, points5.data(), 5);
     return levels[result.level];
@@ -378,6 +395,7 @@ int FaceAPI::ResolutionEvaluate(const SeetaImageData &simage, const SeetaRect &b
 /// 人脸姿态质量评估
 int FaceAPI::PoseEvaluate(const SeetaImageData &simage, const SeetaRect &box,
                           const std::vector<SeetaPointF> &points5) {
+    check<seeta::QualityOfPose>(qualityPose, "pose evaluation");
     vector<int> levels = {-1, 0, 1};
     seeta::QualityResult result = qualityPose->check(simage, box, points5.data(), 5);
     return levels[result.level];
@@ -386,6 +404,7 @@ int FaceAPI::PoseEvaluate(const SeetaImageData &simage, const SeetaRect &box,
 /// 人脸完整性评估
 int FaceAPI::IntegrityEvaluate(const SeetaImageData &simage, const SeetaRect &box,
                                const std::vector<SeetaPointF> &points5) {
+    check<seeta::QualityOfIntegrity>(qualityIntegrity, "integrity evaluation");
     vector<int> levels = {-1, 0, 1};
     seeta::QualityResult result = qualityIntegrity->check(simage, box, points5.data(), 5);
     return levels[result.level];
@@ -393,49 +412,57 @@ int FaceAPI::IntegrityEvaluate(const SeetaImageData &simage, const SeetaRect &bo
 
 /// 人脸跟踪
 SeetaTrackingFaceInfoArray FaceAPI::Track(const SeetaImageData &simage) {
-
+    check<seeta::FaceTracker>(faceTracker, "face tracker");
     return faceTracker->Track(simage);
 }
 
 /// 人脸跟踪清除
 void FaceAPI::ResetTrack() {
+    check<seeta::FaceTracker>(faceTracker, "face tracker");
     faceTracker->Reset();
 }
 
 /// 人脸跟踪最小尺寸设置
 void FaceAPI::SetTrackMinFaceSize(int facesize) {
+    check<seeta::FaceTracker>(faceTracker, "face tracker");
     faceTracker->SetMinFaceSize(facesize);
 }
 
 /// 人脸跟踪器的分辨率设置
 void FaceAPI::SetTrackResolution(int width, int height) {
+    check<seeta::FaceTracker>(faceTracker, "face tracker");
     track_width = width;
     track_height = height;
 }
 
 /// 人脸跟踪人脸置信度设置
 void FaceAPI::SetTrackThreshold(float threshold) {
+    check<seeta::FaceTracker>(faceTracker, "face tracker");
     faceTracker->SetThreshold(threshold);
 }
 
 /// 人脸跟踪检测间隔
 void FaceAPI::SetTrackInterval(int interval) {
+    check<seeta::FaceTracker>(faceTracker, "face tracker");
     faceTracker->SetInterval(interval);
 }
 
 /// 人脸跟踪线程数设置
 void FaceAPI::SetTrackThreads(int num) {
+    check<seeta::FaceTracker>(faceTracker, "face tracker");
     faceTracker->SetSingleCalculationThreads(num);
 }
 
 /// 裁剪人脸
 SeetaImageData FaceAPI::CropFace(const SeetaImageData &simage,
                                  const std::vector<SeetaPointF> &points5) {
+    check<seeta::FaceRecognizer>(faceRecognizer, "face recognition");
     return faceRecognizer->CropFaceV2(simage, points5.data());
 }
 
 /// 裁剪图特征提取
 std::vector<float> FaceAPI::ExtractCroppedFace(const SeetaImageData &simage) {
+    check<seeta::FaceRecognizer>(faceRecognizer, "face recognition");
     std::vector<float> feature;
     feature.resize(1024);
     faceRecognizer->ExtractCroppedFace(simage, feature.data());
@@ -445,6 +472,7 @@ std::vector<float> FaceAPI::ExtractCroppedFace(const SeetaImageData &simage) {
 /// 原图提取特征
 std::vector<float> FaceAPI::Extract(const SeetaImageData &simage,
                                     const std::vector<SeetaPointF> &points5) {
+    check<seeta::FaceRecognizer>(faceRecognizer, "face recognition");
     std::vector<float> feature;
     feature.resize(1024);
     faceRecognizer->Extract(simage, points5.data(), feature.data());
@@ -454,10 +482,12 @@ std::vector<float> FaceAPI::Extract(const SeetaImageData &simage,
 /// 相似度计算
 float FaceAPI::CalculateSimilarity(const std::vector<float> &feature1,
                                    const std::vector<float> &feature2) {
+    check<seeta::FaceRecognizer>(faceRecognizer, "face recognition");
     float score = faceRecognizer->CalculateSimilarity(feature1.data(),
                                                       feature2.data());
     return score;
 }
+
 
 FaceAPI::~FaceAPI() {
     delete faceDetector;
@@ -492,5 +522,6 @@ FaceAPI::~FaceAPI() {
     faceRecognizer = nullptr;       //人脸识别faceFecognition
     delete faceTracker;
     faceTracker = nullptr;             //人脸跟踪器
+    spdlog::drop_all();
     FRINFO << "unload engine successfully!" << endl;
 }

@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <sstream>
+
 #if defined(_WIN32)
 #ifdef FACE_LIB
 #define FACEAPI __declspec(dllexport)
@@ -11,19 +12,42 @@
 #else
 #define FACEAPI __attribute__((visibility("default")))
 #endif  // _WIN32
+
+
+#ifdef _WIN32
+//strrchr:查找字符在指定字符串从右面开始的第一次出现的位置，如果成功，返回该字符以及后面的字符，如果失败，返回NULL
+//strcgr:查找字符在指定字符串首次出现的位置
+#define __FILENAME__ (strrchr(__FILE__,'\\')?(strrchr(__FILE__,'\\')+1):__FILE__)
+#else
+#define __FILENAME__ (strrchr(__FILE__,'/')?(strrchr(__FILE__,'/')+1):__FILE__)
+#endif //_WIN32
+
+#ifdef USE_SPDLOG
+
+#include <spdlog/spdlog.h>
+
+#endif
+enum LOG_LEVEL {
+    DEBUG,
+    INFO,
+    WARNING,
+    ERROR
+};
+
 class FACEAPI FRLogger {
 public:
     FRLogger() {
         line_ = "";
         prefix_ = "[FR]";
-        verbose_ = true;
+        log_level_ = LOG_LEVEL::INFO;
     }
 
-    explicit FRLogger(bool verbose, const std::string &prefix = "[FR]");
+    explicit FRLogger(LOG_LEVEL log_level, const std::string &prefix = "[FR]",
+                      LOG_LEVEL activate_level = LOG_LEVEL::INFO);
 
     template<typename T>
     FRLogger &operator<<(const T &val) {
-        if (!verbose_) {
+        if (log_level_ < activate_level_) {
             return *this;
         }
         std::stringstream ss;
@@ -35,29 +59,32 @@ public:
     FRLogger &operator<<(std::ostream &(*os)(std::ostream &));
 
     ~FRLogger() {
-        if (!verbose_ && line_ != "") {
-            std::cout << line_ << std::endl;
-        }
+
     }
 
 private:
     std::string line_;
     std::string prefix_;
-    bool verbose_ = true;
+    LOG_LEVEL log_level_;
+    LOG_LEVEL activate_level_;
 };
 
 
 #define FRERROR                                                \
-  FRLogger(true, "[ERROR]") << __FILE__ << "(" << __LINE__ \
-                            << ")::" << __FUNCTION__ << "\t"
+  FRLogger(LOG_LEVEL::ERROR, "[ERROR]") << __FILENAME__ << "(" << __LINE__ \
+                            << ")::" << __FUNCTION__ << "\t|"
 
 #define FRWARNING                                                \
-  FRLogger(true, "[WARNING]") << __FILE__ << "(" << __LINE__ \
-                              << ")::" << __FUNCTION__ << "\t"
+  FRLogger(LOG_LEVEL::WARNING,"[WARNING]") << __FILENAME__ << "(" << __LINE__ \
+                              << ")::" << __FUNCTION__ << "\t|"
 
 #define FRINFO                                                \
-  FRLogger(true, "[INFO]") << __FILE__ << "(" << __LINE__ \
-                           << ")::" << __FUNCTION__ << "\t"
+  FRLogger(LOG_LEVEL::INFO,"[INFO]") << __FILENAME__ << "(" << __LINE__ \
+                           << ")::" << __FUNCTION__ << "\t|"
+
+#define FRDEBUG                                                \
+  FRLogger(true, LOG_LEVEL::DEBUG,"[DEBUG]") << __FILENAME__ << "(" << __LINE__ \
+                           << ")::" << __FUNCTION__ << "\t|"
 
 #define RRASSERT(condition, format, ...)                        \
   if (!(condition)) {                                           \
@@ -67,4 +94,3 @@ private:
     FDERROR << buffer.data() << std::endl;                      \
     std::abort();                                               \
   }
-
