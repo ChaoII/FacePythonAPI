@@ -89,6 +89,5 @@ SeetaTrackingFaceInfoArray2vector(const SeetaTrackingFaceInfoArray &track_infos)
 
 PYBIND11_MODULE(@PY_LIBRARY_NAME@, m) {
     m.doc() = "face api collection";
-    BindStruct(m);
     BindFaceAPI(m);
 }

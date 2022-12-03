@@ -16,8 +16,6 @@
 
 namespace py = pybind11;
 
-FACEAPI void BindStruct(py::module &);
-
 FACEAPI void BindFaceAPI(py::module &);
 
 FACEAPI void PyArrayToSeetaImageData(py::array_t<unsigned char> pyarray, SeetaImageData *data);
