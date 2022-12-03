@@ -2,6 +2,7 @@
 // Created by aichao on 2022/11/24.
 //
 #include "src/pybind/main.h"
+#include "src/pybind/FaceAPI.h"
 
 void BindFaceAPI(py::module &m) {
 
@@ -17,23 +18,23 @@ void BindFaceAPI(py::module &m) {
                 return self.Detect(s_img);
             })
             .def("set_property", &FaceAPI::SetProperty)
-            .def("mark5", [](FaceAPI &self, const py::array_t<unsigned char> &img, const SeetaRect &box) {
+            .def("mark5", [](FaceAPI &self, const py::array_t<unsigned char> &img, const std::vector<float> &box) {
                 SeetaImageData s_img{};
                 PyArrayToSeetaImageData(img, &s_img);
                 return self.mark5(s_img, box);
             })
-            .def("mark68", [](FaceAPI &self, const py::array_t<unsigned char> &img, const SeetaRect &box) {
+            .def("mark68", [](FaceAPI &self, const py::array_t<unsigned char> &img, const std::vector<float> &box) {
                 SeetaImageData s_img{};
                 PyArrayToSeetaImageData(img, &s_img);
                 return self.mark68(s_img, box);
             })
             .def("set_live_threshold", &FaceAPI::SetLiveThreshold)
             .def("alive_detect", [](FaceAPI &self, const py::array_t<unsigned char> &img,
-                                    const SeetaRect &box,
-                                    const std::vector<SeetaPointF> &point5) {
+                                    const std::vector<float> &box,
+                                    const std::vector<std::vector<float>> &points5) {
                 SeetaImageData s_img{};
                 PyArrayToSeetaImageData(img, &s_img);
-                return self.AliveDetect(s_img, box, point5);
+                return self.AliveDetect(s_img, box, points5);
             })
             .def("get_alive_score", [](FaceAPI &self) {
 
@@ -45,8 +46,8 @@ void BindFaceAPI(py::module &m) {
             })
             .def("video_alive_detect", [](FaceAPI &self,
                                           const py::array_t<unsigned char> &img,
-                                          const SeetaRect &box,
-                                          const std::vector<SeetaPointF> &points5) {
+                                          const std::vector<float> &box,
+                                          const std::vector<std::vector<float>> &points5) {
                 SeetaImageData s_img{};
                 PyArrayToSeetaImageData(img, &s_img);
                 return self.VideoAliveDetect(s_img, box, points5);
@@ -54,7 +55,7 @@ void BindFaceAPI(py::module &m) {
             .def("reset_video_alive", &FaceAPI::ResetVideoAlive)
             .def("mark_mask", [](FaceAPI &self,
                                  const py::array_t<unsigned char> &img,
-                                 const SeetaRect &box) {
+                                 const std::vector<float> &box) {
 
                 SeetaImageData s_img{};
                 PyArrayToSeetaImageData(img, &s_img);
@@ -62,7 +63,7 @@ void BindFaceAPI(py::module &m) {
             })
             .def("predict_age_crop", [](FaceAPI &self,
                                         const py::array_t<unsigned char> &img,
-                                        const std::vector<SeetaPointF> &points5) {
+                                        const std::vector<std::vector<float>> &points5) {
                 SeetaImageData s_img{};
                 PyArrayToSeetaImageData(img, &s_img);
                 return self.PredictAgeWithCrop(s_img, points5);
@@ -75,7 +76,7 @@ void BindFaceAPI(py::module &m) {
             })
             .def("predict_gender_crop", [](FaceAPI &self,
                                            const py::array_t<unsigned char> &img,
-                                           const std::vector<SeetaPointF> &points5) {
+                                           const std::vector<std::vector<float>> &points5) {
                 SeetaImageData s_img{};
                 PyArrayToSeetaImageData(img, &s_img);
                 return self.PredictGenderWithCrop(s_img, points5);
@@ -88,54 +89,54 @@ void BindFaceAPI(py::module &m) {
             })
             .def("detect_mask", [](FaceAPI &self,
                                    const py::array_t<unsigned char> &img,
-                                   const SeetaRect &box) {
+                                   const std::vector<float> &box) {
                 SeetaImageData s_img{};
                 PyArrayToSeetaImageData(img, &s_img);
                 return self.DetectMask(s_img, box);
             })
             .def("get_eyes_status", [](FaceAPI &self,
                                        const py::array_t<unsigned char> &img,
-                                       const std::vector<SeetaPointF> &points5) {
+                                       const std::vector<std::vector<float>> &points5) {
                 SeetaImageData s_img{};
                 PyArrayToSeetaImageData(img, &s_img);
                 return self.DectectEye(s_img, points5);
             })
             .def("clarity_evaluate", [](FaceAPI &self,
                                         const py::array_t<unsigned char> &img,
-                                        const SeetaRect &box,
-                                        const std::vector<SeetaPointF> &points5) {
+                                        const std::vector<float> &box,
+                                        const std::vector<std::vector<float>> &points5) {
                 SeetaImageData s_img{};
                 PyArrayToSeetaImageData(img, &s_img);
                 return self.ClarityEvaluate(s_img, box, points5);
             })
             .def("bright_evaluate", [](FaceAPI &self,
                                        const py::array_t<unsigned char> &img,
-                                       const SeetaRect &box,
-                                       const std::vector<SeetaPointF> &points5) {
+                                       const std::vector<float> &box,
+                                       const std::vector<std::vector<float>> &points5) {
                 SeetaImageData s_img{};
                 PyArrayToSeetaImageData(img, &s_img);
                 return self.BrightEvaluate(s_img, box, points5);
             })
             .def("resolution_evaluate", [](FaceAPI &self,
                                            const py::array_t<unsigned char> &img,
-                                           const SeetaRect &box,
-                                           const std::vector<SeetaPointF> &points5) {
+                                           const std::vector<float> &box,
+                                           const std::vector<std::vector<float>> &points5) {
                 SeetaImageData s_img{};
                 PyArrayToSeetaImageData(img, &s_img);
                 return self.ResolutionEvaluate(s_img, box, points5);
             })
             .def("pose_evaluate", [](FaceAPI &self,
                                      const py::array_t<unsigned char> &img,
-                                     const SeetaRect &box,
-                                     const std::vector<SeetaPointF> &points5) {
+                                     const std::vector<float> &box,
+                                     const std::vector<std::vector<float>> &points5) {
                 SeetaImageData s_img{};
                 PyArrayToSeetaImageData(img, &s_img);
                 return self.PoseEvaluate(s_img, box, points5);
             })
             .def("integrity_evaluate", [](FaceAPI &self,
                                           const py::array_t<unsigned char> &img,
-                                          const SeetaRect &box,
-                                          const std::vector<SeetaPointF> &points5) {
+                                          const std::vector<float> &box,
+                                          const std::vector<std::vector<float>> &points5) {
                 SeetaImageData s_img{};
                 PyArrayToSeetaImageData(img, &s_img);
                 return self.IntegrityEvaluate(s_img, box, points5);
@@ -155,7 +156,7 @@ void BindFaceAPI(py::module &m) {
             .def("set_track_threads", &FaceAPI::SetTrackThreads)
             .def("crop_face", [](FaceAPI &self,
                                  const py::array_t<unsigned char> &img,
-                                 const std::vector<SeetaPointF> &points5) {
+                                 const std::vector<std::vector<float>> &points5) {
                 SeetaImageData s_img{};
                 PyArrayToSeetaImageData(img, &s_img);
                 auto data = self.CropFace(s_img, points5);
@@ -169,7 +170,7 @@ void BindFaceAPI(py::module &m) {
             })
             .def("extract", [](FaceAPI &self,
                                const py::array_t<unsigned char> &img,
-                               const std::vector<SeetaPointF> &points5) {
+                               const std::vector<std::vector<float>> &points5) {
                 SeetaImageData s_img{};
                 PyArrayToSeetaImageData(img, &s_img);
                 return self.Extract(s_img, points5);

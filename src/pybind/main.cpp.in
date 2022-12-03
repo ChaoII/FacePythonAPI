@@ -25,6 +25,67 @@ py::array_t<unsigned char> SeetaImageDataToPyArray(const SeetaImageData &data) {
     return out;
 }
 
+std::vector<int> SeetaPoint2vector(const SeetaPoint &point) {
+    return std::vector<int>{point.x, point.y};
+}
+
+std::vector<float> SeetaPointF2vector(const SeetaPointF &point) {
+    return std::vector<float>{static_cast<float>(point.x),
+                              static_cast<float>(point.y)};
+}
+
+std::vector<int> SeetaRect2vector(const SeetaRect &rect) {
+    return std::vector<int>{rect.x,
+                            rect.y,
+                            rect.width,
+                            rect.height};
+}
+
+std::vector<float>
+SeetaFaceInfo2vector(const SeetaFaceInfo &face_info) {
+
+    return std::vector<float>{static_cast<float>(face_info.pos.x),
+                              static_cast<float>(face_info.pos.y),
+                              static_cast<float>(face_info.pos.width),
+                              static_cast<float>(face_info.pos.height),
+                              face_info.score};
+}
+
+std::vector<std::vector<float>>
+SeetaFaceInfoArray2vector(const SeetaFaceInfoArray &face_infos) {
+
+    std::vector<std::vector<float>> result;
+    for (int i = 0; i < face_infos.size; i++) {
+
+        result.push_back(SeetaFaceInfo2vector(face_infos.data[i]));
+    }
+    return result;
+}
+
+std::vector<float>
+SeetaTrackingFaceInfo2vector(const SeetaTrackingFaceInfo &track_info) {
+
+    return std::vector<float>{static_cast<float>(track_info.pos.x),
+                              static_cast<float>(track_info.pos.y),
+                              static_cast<float>(track_info.pos.width),
+                              static_cast<float>(track_info.pos.height),
+                              track_info.score,
+                              static_cast<float>(track_info.PID),
+                              static_cast<float>(track_info.frame_no),
+                              static_cast<float>(track_info.step)};
+}
+
+std::vector<std::vector<float>>
+SeetaTrackingFaceInfoArray2vector(const SeetaTrackingFaceInfoArray &track_infos) {
+
+    std::vector<std::vector<float>> result;
+    for (int i = 0; i < track_infos.size; i++) {
+
+        result.push_back(SeetaTrackingFaceInfo2vector(track_infos.data[i]));
+    }
+    return result;
+}
+
 
 PYBIND11_MODULE(@PY_LIBRARY_NAME@, m) {
     m.doc() = "face api collection";

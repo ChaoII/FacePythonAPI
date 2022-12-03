@@ -223,9 +223,9 @@ void FaceAPI::init_engine(const std::vector<int> &model_ids) {
 
 
 //人脸框检测
-SeetaFaceInfoArray FaceAPI::Detect(const SeetaImageData &simage) {
+std::vector<std::vector<float>> FaceAPI::Detect(const SeetaImageData &simage) {
     SeetaFaceInfoArray faces = faceDetector->detect(simage);
-    return faces;
+    return SeetaFaceInfoArray2vector(faces);
 }
 
 //人脸检测阈值
@@ -245,17 +245,35 @@ void FaceAPI::SetProperty(int property, float value) {
 }
 
 //5特征点检测
-std::vector<SeetaPointF> FaceAPI::mark5(const SeetaImageData &simage,
-                                        const SeetaRect &box) {
+std::vector<std::vector<float>> FaceAPI::mark5(const SeetaImageData &simage,
+                                               const std::vector<float> &box) {
     check<seeta::FaceLandmarker>(landDetector5, "face landmark5");
-    return landDetector5->mark(simage, box);
+    SeetaRect rect{static_cast<int>(box[0]),
+                   static_cast<int>(box[1]),
+                   static_cast<int>(box[2]),
+                   static_cast<int>(box[3])};
+    auto points = landDetector5->mark(simage, rect);
+    std::vector<std::vector<float>> result;
+    for (auto &point: points) {
+        result.push_back(SeetaPointF2vector(point));
+    }
+    return result;
 }
 
 //68特征点检测
-std::vector<SeetaPointF> FaceAPI::mark68(const SeetaImageData &simage,
-                                         const SeetaRect &box) {
+std::vector<std::vector<float>> FaceAPI::mark68(const SeetaImageData &simage,
+                                                const std::vector<float> &box) {
     check<seeta::FaceLandmarker>(landDetector68, "face landmark68");
-    return landDetector68->mark(simage, box);
+    SeetaRect rect{static_cast<int>(box[0]),
+                   static_cast<int>(box[1]),
+                   static_cast<int>(box[2]),
+                   static_cast<int>(box[3])};
+    auto points = landDetector68->mark(simage, rect);
+    std::vector<std::vector<float>> result;
+    for (auto &point: points) {
+        result.push_back(SeetaPointF2vector(point));
+    }
+    return result;
 }
 
 void FaceAPI::SetLiveThreshold(float clarity, float reality) {
@@ -265,11 +283,19 @@ void FaceAPI::SetLiveThreshold(float clarity, float reality) {
 
 ///活体检测-返回是否为活体
 int FaceAPI::AliveDetect(const SeetaImageData &simage,
-                         const SeetaRect &box,
-                         const std::vector<SeetaPointF> &points5) {
+                         const std::vector<float> &box,
+                         const std::vector<std::vector<float>> &points5) {
 
     check<seeta::FaceAntiSpoofing>(liveDetector, "live detector");
-    auto status = liveDetector->Predict(simage, box, points5.data());
+    SeetaRect rect{static_cast<int>(box[0]),
+                   static_cast<int>(box[1]),
+                   static_cast<int>(box[2]),
+                   static_cast<int>(box[3])};
+    std::vector<SeetaPointF> points;
+    for (auto &point: points5) {
+        points.push_back(SeetaPointF{point[0], point[1]});
+    }
+    auto status = liveDetector->Predict(simage, rect, points.data());
     int ret = int(status);
     return ret; //=0真实,1攻击,2不确定
 }
@@ -282,10 +308,18 @@ void FaceAPI::GetAliveScore(float *clarity, float *reality) {
 
 ///视频活体检测
 int FaceAPI::VideoAliveDetect(const SeetaImageData &simage,
-                              const SeetaRect &box,
-                              const std::vector<SeetaPointF> &points5) {
+                              const std::vector<float> &box,
+                              const std::vector<std::vector<float>> &points5) {
     check<seeta::FaceAntiSpoofing>(liveDetector, "live detector");
-    auto status = liveDetector->Predict(simage, box, points5.data());
+    SeetaRect rect{static_cast<int>(box[0]),
+                   static_cast<int>(box[1]),
+                   static_cast<int>(box[2]),
+                   static_cast<int>(box[3])};
+    std::vector<SeetaPointF> points;
+    for (auto &point: points5) {
+        points.push_back(SeetaPointF{point[0], point[1]});
+    }
+    auto status = liveDetector->Predict(simage, rect, points.data());
     int ret = int(status);
     return ret; //=0真实,1攻击,2不确定
 }
@@ -298,23 +332,32 @@ void FaceAPI::ResetVideoAlive() {
 
 ///五官遮挡检测,
 std::vector<seeta::FaceLandmarker::PointWithMask>
-FaceAPI::markMask(const SeetaImageData &simage, const SeetaRect &box) {
+FaceAPI::markMask(const SeetaImageData &simage, const std::vector<float> &box) {
 
     check<seeta::FaceLandmarker>(faceMaskDetector, "face mask detector");
-    return faceMaskDetector->mark_v2(simage, box);
+    SeetaRect rect{static_cast<int>(box[0]),
+                   static_cast<int>(box[1]),
+                   static_cast<int>(box[2]),
+                   static_cast<int>(box[3])};
+    return faceMaskDetector->mark_v2(simage, rect);
 }
 
 ///年龄检测
 int FaceAPI::PredictAgeWithCrop(const SeetaImageData &simage,
-                                const std::vector<SeetaPointF> &points5) {
+                                const std::vector<std::vector<float>> &points5) {
     check<seeta::AgePredictor>(agePredictor, "age predictor");
+    std::vector<SeetaPointF> points;
+    for (auto &point: points5) {
+        points.push_back(SeetaPointF{point[0], point[1]});
+    }
     int age = 0;
-    agePredictor->PredictAgeWithCrop(simage, points5.data(), age);
+    agePredictor->PredictAgeWithCrop(simage, points.data(), age);
     return age;
 }
 
 int FaceAPI::PredictAge(const SeetaImageData &simage) {
     check<seeta::AgePredictor>(agePredictor, "age predictor");
+
     int age = 0;
     agePredictor->PredictAge(simage, age);
     return age;
@@ -322,11 +365,15 @@ int FaceAPI::PredictAge(const SeetaImageData &simage) {
 
 ///性别检测
 int FaceAPI::PredictGenderWithCrop(const SeetaImageData &simage,
-                                   const std::vector<SeetaPointF> &points5) {
+                                   const std::vector<std::vector<float>> &points5) {
     check<seeta::GenderPredictor>(genderPredictor, "gender predictor");
     seeta::GenderPredictor::GENDER gender;
     int genderOut = 0;
-    genderPredictor->PredictGenderWithCrop(simage, points5.data(), gender);
+    std::vector<SeetaPointF> points;
+    for (auto &point: points5) {
+        points.push_back(SeetaPointF{point[0], point[1]});
+    }
+    genderPredictor->PredictGenderWithCrop(simage, points.data(), gender);
     if (gender == seeta::GenderPredictor::FEMALE)
         genderOut = 1;
     return genderOut;
@@ -343,20 +390,28 @@ int FaceAPI::PredictGender(const SeetaImageData &simage) {
 }
 
 ///口罩检测
-int FaceAPI::DetectMask(const SeetaImageData &simage, const SeetaRect &box) {
+int FaceAPI::DetectMask(const SeetaImageData &simage, const std::vector<float> &box) {
     check<seeta::MaskDetector>(maskDetector, "mask detector");
     float score = 0;
-    bool mask = maskDetector->detect(simage, box, &score);
+    SeetaRect rect{static_cast<int>(box[0]),
+                   static_cast<int>(box[1]),
+                   static_cast<int>(box[2]),
+                   static_cast<int>(box[3])};
+    bool mask = maskDetector->detect(simage, rect, &score);
     return int(mask);
 }
 
 /// 人眼状态检测
 std::vector<int> FaceAPI::DectectEye(const SeetaImageData &simage,
-                                     const std::vector<SeetaPointF> &points5) {
+                                     const std::vector<std::vector<float>> &points5) {
     check<seeta::EyeStateDetector>(eyeStateDetector, "eye status detector");
     std::vector<int> states;
     seeta::EyeStateDetector::EYE_STATE left_eye, right_eye;
-    eyeStateDetector->Detect(simage, points5.data(), left_eye, right_eye);
+    std::vector<SeetaPointF> points;
+    for (auto &point: points5) {
+        points.push_back(SeetaPointF{point[0], point[1]});
+    }
+    eyeStateDetector->Detect(simage, points.data(), left_eye, right_eye);
     states.push_back(int(left_eye));
     states.push_back(int(right_eye));
     return states;
@@ -364,49 +419,94 @@ std::vector<int> FaceAPI::DectectEye(const SeetaImageData &simage,
 
 /// 清晰度评估
 int
-FaceAPI::ClarityEvaluate(const SeetaImageData &simage, const SeetaRect &box,
-                         const std::vector<SeetaPointF> &points5) {
+FaceAPI::ClarityEvaluate(const SeetaImageData &simage,
+                         const std::vector<float> &box,
+                         const std::vector<std::vector<float>> &points5) {
     check<seeta::QualityRule>(qualityClarity, "clarity evaluation");
     //低中高
     vector<int> levels = {-1, 0, 1};
-    seeta::QualityResult result = qualityClarity->check(simage, box, points5.data(), 5);
+    SeetaRect rect{static_cast<int>(box[0]),
+                   static_cast<int>(box[1]),
+                   static_cast<int>(box[2]),
+                   static_cast<int>(box[3])};
+    std::vector<SeetaPointF> points;
+    for (auto &point: points5) {
+        points.push_back(SeetaPointF{point[0], point[1]});
+    }
+    seeta::QualityResult result = qualityClarity->check(simage, rect, points.data(), 5);
     return levels[result.level];
 }
 
 /// 明亮度评估
 int
-FaceAPI::BrightEvaluate(const SeetaImageData &simage, const SeetaRect &box,
-                        const std::vector<SeetaPointF> &points5) {
+FaceAPI::BrightEvaluate(const SeetaImageData &simage,
+                        const std::vector<float> &box,
+                        const std::vector<std::vector<float>> &points5) {
     check<seeta::QualityRule>(qualityBright, "bright evaluation");
     vector<int> levels = {-1, 0, 1};
-    seeta::QualityResult result = qualityBright->check(simage, box, points5.data(), 5);
+    SeetaRect rect{static_cast<int>(box[0]),
+                   static_cast<int>(box[1]),
+                   static_cast<int>(box[2]),
+                   static_cast<int>(box[3])};
+    std::vector<SeetaPointF> points;
+    for (auto &point: points5) {
+        points.push_back(SeetaPointF{point[0], point[1]});
+    }
+    seeta::QualityResult result = qualityBright->check(simage, rect, points.data(), 5);
     return levels[result.level];
 }
 
 /// 分辨率评估
-int FaceAPI::ResolutionEvaluate(const SeetaImageData &simage, const SeetaRect &box,
-                                const std::vector<SeetaPointF> &points5) {
+int FaceAPI::ResolutionEvaluate(const SeetaImageData &simage,
+                                const std::vector<float> &box,
+                                const std::vector<std::vector<float>> &points5) {
     check<seeta::QualityRule>(qualityResolution, "resolution evaluation");
     vector<int> levels = {-1, 0, 1};
-    seeta::QualityResult result = qualityResolution->check(simage, box, points5.data(), 5);
+    SeetaRect rect{static_cast<int>(box[0]),
+                   static_cast<int>(box[1]),
+                   static_cast<int>(box[2]),
+                   static_cast<int>(box[3])};
+    std::vector<SeetaPointF> points;
+    for (auto &point: points5) {
+        points.push_back(SeetaPointF{point[0], point[1]});
+    }
+    seeta::QualityResult result = qualityResolution->check(simage, rect, points.data(), 5);
     return levels[result.level];
 }
 
 /// 人脸姿态质量评估
-int FaceAPI::PoseEvaluate(const SeetaImageData &simage, const SeetaRect &box,
-                          const std::vector<SeetaPointF> &points5) {
+int FaceAPI::PoseEvaluate(const SeetaImageData &simage,
+                          const std::vector<float> &box,
+                          const std::vector<std::vector<float>> &points5) {
     check<seeta::QualityOfPose>(qualityPose, "pose evaluation");
     vector<int> levels = {-1, 0, 1};
-    seeta::QualityResult result = qualityPose->check(simage, box, points5.data(), 5);
+    SeetaRect rect{static_cast<int>(box[0]),
+                   static_cast<int>(box[1]),
+                   static_cast<int>(box[2]),
+                   static_cast<int>(box[3])};
+    std::vector<SeetaPointF> points;
+    for (auto &point: points5) {
+        points.push_back(SeetaPointF{point[0], point[1]});
+    }
+    seeta::QualityResult result = qualityPose->check(simage, rect, points.data(), 5);
     return levels[result.level];
 }
 
 /// 人脸完整性评估
-int FaceAPI::IntegrityEvaluate(const SeetaImageData &simage, const SeetaRect &box,
-                               const std::vector<SeetaPointF> &points5) {
+int FaceAPI::IntegrityEvaluate(const SeetaImageData &simage,
+                               const std::vector<float> &box,
+                               const std::vector<std::vector<float>> &points5) {
     check<seeta::QualityOfIntegrity>(qualityIntegrity, "integrity evaluation");
     vector<int> levels = {-1, 0, 1};
-    seeta::QualityResult result = qualityIntegrity->check(simage, box, points5.data(), 5);
+    SeetaRect rect{static_cast<int>(box[0]),
+                   static_cast<int>(box[1]),
+                   static_cast<int>(box[2]),
+                   static_cast<int>(box[3])};
+    std::vector<SeetaPointF> points;
+    for (auto &point: points5) {
+        points.push_back(SeetaPointF{point[0], point[1]});
+    }
+    seeta::QualityResult result = qualityIntegrity->check(simage, rect, points.data(), 5);
     return levels[result.level];
 }
 
@@ -455,9 +555,13 @@ void FaceAPI::SetTrackThreads(int num) {
 
 /// 裁剪人脸
 SeetaImageData FaceAPI::CropFace(const SeetaImageData &simage,
-                                 const std::vector<SeetaPointF> &points5) {
+                                 const std::vector<std::vector<float>> &points5) {
     check<seeta::FaceRecognizer>(faceRecognizer, "face recognition");
-    return faceRecognizer->CropFaceV2(simage, points5.data());
+    std::vector<SeetaPointF> points;
+    for (auto &point: points5) {
+        points.push_back(SeetaPointF{point[0], point[1]});
+    }
+    return faceRecognizer->CropFaceV2(simage, points.data());
 }
 
 /// 裁剪图特征提取
@@ -471,11 +575,15 @@ std::vector<float> FaceAPI::ExtractCroppedFace(const SeetaImageData &simage) {
 
 /// 原图提取特征
 std::vector<float> FaceAPI::Extract(const SeetaImageData &simage,
-                                    const std::vector<SeetaPointF> &points5) {
+                                    const std::vector<std::vector<float>> &points5) {
     check<seeta::FaceRecognizer>(faceRecognizer, "face recognition");
+    std::vector<SeetaPointF> points;
+    for (auto &point: points5) {
+        points.push_back(SeetaPointF{point[0], point[1]});
+    }
     std::vector<float> feature;
     feature.resize(1024);
-    faceRecognizer->Extract(simage, points5.data(), feature.data());
+    faceRecognizer->Extract(simage, points.data(), feature.data());
     return feature;
 }
 
@@ -522,6 +630,5 @@ FaceAPI::~FaceAPI() {
     faceRecognizer = nullptr;       //人脸识别faceFecognition
     delete faceTracker;
     faceTracker = nullptr;             //人脸跟踪器
-    spdlog::drop_all();
     FRINFO << "unload engine successfully!" << endl;
 }

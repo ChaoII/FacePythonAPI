@@ -5,6 +5,7 @@
 #pragma
 
 #include "src/utils/utils.h"
+#include "src/pybind/main.h"
 #include <seeta/Common/Struct.h>
 #include <seeta/FaceDetector.h>
 #include <seeta/FaceLandmarker.h>
@@ -33,83 +34,84 @@ public:
 
 
     ///人脸检测框
-    SeetaFaceInfoArray Detect(const SeetaImageData &simage);
+    std::vector<std::vector<float>> Detect(const SeetaImageData &simage);
 
     ///人脸检测阈值
     void SetProperty(int property, float value);
 
     /// 人脸特征点检测5
-    std::vector<SeetaPointF> mark5(const SeetaImageData &simage, const SeetaRect &box);
+    std::vector<std::vector<float>> mark5(const SeetaImageData &simage, const std::vector<float> &box);
 
     /// 人脸特征点检测68
-    std::vector<SeetaPointF> mark68(const SeetaImageData &simage, const SeetaRect &box);
+    std::vector<std::vector<float>> mark68(const SeetaImageData &simage, const std::vector<float> &box);
 
     /// 设置活体阈值
     void SetLiveThreshold(float clarity, float reality);
 
     /// 活体检测
-    int AliveDetect(const SeetaImageData &simage, const SeetaRect &box,
-                    const std::vector<SeetaPointF> &points5);
+    int AliveDetect(const SeetaImageData &simage,
+                    const std::vector<float> &box,
+                    const std::vector<std::vector<float>> &points5);
 
     ///活体检测-返回清晰度跟活体值
     void GetAliveScore(float *clarity, float *reality);
 
     ///视频活体检测
-    int VideoAliveDetect(const SeetaImageData &simage, const SeetaRect &box,
-                         const std::vector<SeetaPointF> &points5);
+    int VideoAliveDetect(const SeetaImageData &simage, const std::vector<float> &box,
+                         const std::vector<std::vector<float>> &points5);
 
     ///视频活体检测重置
     void ResetVideoAlive();
 
     ///五官遮挡检测
     std::vector<seeta::FaceLandmarker::PointWithMask>
-    markMask(const SeetaImageData &simage, const SeetaRect &box);
+    markMask(const SeetaImageData &simage, const std::vector<float> &box);
 
     ///年龄检测
     int PredictAgeWithCrop(const SeetaImageData &simage,
-                           const std::vector<SeetaPointF> &points5);
+                           const std::vector<std::vector<float>> &points5);
 
     /// 年龄检测使用裁剪好的图片（仅有人脸）
     int PredictAge(const SeetaImageData &simage);
 
     /// 性别检测
     int PredictGenderWithCrop(const SeetaImageData &simage,
-                              const std::vector<SeetaPointF> &points5);
+                              const std::vector<std::vector<float>> &points5);
 
     /// 性别检测使用裁剪好的图片（仅有人脸）
     int PredictGender(const SeetaImageData &simage);
 
     ///口罩检测
-    int DetectMask(const SeetaImageData &simage, const SeetaRect &box);
+    int DetectMask(const SeetaImageData &simage, const std::vector<float> &box);
 
     ///人眼状态检测
     std::vector<int> DectectEye(const SeetaImageData &simage,
-                                const std::vector<SeetaPointF> &points5);
+                                const std::vector<std::vector<float>> &points5);
 
     /// 清晰度评估
     int ClarityEvaluate(const SeetaImageData &simage,
-                        const SeetaRect &box,
-                        const std::vector<SeetaPointF> &points5);
+                        const std::vector<float> &box,
+                        const std::vector<std::vector<float>> &points5);
 
     ///明亮度评估
     int BrightEvaluate(const SeetaImageData &simage,
-                       const SeetaRect &box,
-                       const std::vector<SeetaPointF> &points5);
+                       const std::vector<float> &box,
+                       const std::vector<std::vector<float>> &points5);
 
     ///分辨率评估
     int ResolutionEvaluate(const SeetaImageData &simage,
-                           const SeetaRect &box,
-                           const std::vector<SeetaPointF> &points5);
+                           const std::vector<float> &box,
+                           const std::vector<std::vector<float>> &points5);
 
     ///人脸姿态质量评估
     int PoseEvaluate(const SeetaImageData &simage,
-                     const SeetaRect &box,
-                     const std::vector<SeetaPointF> &points5);
+                     const std::vector<float> &box,
+                     const std::vector<std::vector<float>> &points5);
 
     ///人脸完整性评估
     int IntegrityEvaluate(const SeetaImageData &simage,
-                          const SeetaRect &box,
-                          const std::vector<SeetaPointF> &points5);
+                          const std::vector<float> &box,
+                          const std::vector<std::vector<float>> &points5);
 
     ///人脸跟踪
     SeetaTrackingFaceInfoArray Track(const SeetaImageData &simage);
@@ -134,14 +136,14 @@ public:
 
     ///裁剪人脸
     SeetaImageData CropFace(const SeetaImageData &simage,
-                            const std::vector<SeetaPointF> &points5);
+                            const std::vector<std::vector<float>> &points5);
 
     ///裁剪图特征提取
     std::vector<float> ExtractCroppedFace(const SeetaImageData &simage);
 
     ///原图提取特征
     std::vector<float> Extract(const SeetaImageData &simage,
-                               const std::vector<SeetaPointF> &points5);
+                               const std::vector<std::vector<float>> &points5);
 
     ///相似度计算
     float CalculateSimilarity(const std::vector<float> &feature1,

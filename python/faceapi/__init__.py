@@ -100,4 +100,4 @@ class FaceAPI:
         return self.face_api.extract(img, points5)
 
     def calculate_similarity(self, feature1, feature2):
-        return self.calculate_similarity(feature1, feature2)
+        return self.face_api.calculate_similarity(feature1, feature2)

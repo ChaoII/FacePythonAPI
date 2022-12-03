@@ -7,7 +7,7 @@ if (NOT PY_LIBRARY_NAME)
     set(PY_LIBRARY_NAME pyfaceapi)
 endif ()
 
-option(USE_SPDLOG "build with spdlog" OFF)
+option(USE_SPDLOG "build with spdlog" ON)
 option(BUILD_PYTHON "" OFF)
 option(BUILD_WITH_GPU "" OFF)
 set(CUDA_DIR "" CACHE PATH "If build tensorrt backend, need to define path of cuda library.")

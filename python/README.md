@@ -48,14 +48,17 @@ from faceapi import FaceAPI
 import cv2
 
 # [0,1,15]表示人脸检测、关键点、人脸识别
-api = FaceAPI("../model", [0, 1, 15])
-img1 = cv2.imread("../images/2.jpg")
+api = FaceAPI("../model", [0, 1, 2])
+img1 = cv2.imread("../images/1.jpg")
 img2 = cv2.imread("../images/2.jpg")
 
 
 def feature_extract(image):
+    # [[x,y,w,h,score]] 有可能检测到多张人脸
     result = api.detect(image)
-    box = result.data.pos
+    # 选择第一个人脸取[x,y,w,h]
+    box = result[0][:4]
+    # 人脸5个关键点[[x,y],[x,y],[x,y],[x,y],[x,y]]
     points5 = api.mark5(image, box)
     feature = api.extract(image, points5)
     return feature
