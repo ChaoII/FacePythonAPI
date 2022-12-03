@@ -29,10 +29,10 @@ git clone --recursive https://github.com/ChaoII/FacePythonAPI.git
 ### 4.3 CPU版本编译
 其中项目`CPU`、`GPU`主要依赖于`tennis`引擎，但是选择不同的编译方式可以自动的进行库的选择，并添加`cuda`路径配置
 ```bash
-cmake ..
+cmake .. -G "visual studio 16 2019" -DUSE_SPDLOG=ON
 cmake --build . --config Release --target FaceAPI -j4
 ```
-其中`cmake ..`后面可跟`-G`参数指定生成器，如果不会请自行参考百度</br>
+其中`cmake ..`后面可跟`-G`参数指定生成器，如果不会请自行参考百度，-DUSE_SPDLOG=ON,使用sdk使用spdlog日志库，但是库体积会变大，请自行衡量</br>
 **注意 :** `windows`上如果是`MSVC`请打开`VS`开发命令提示符，执行上述命令，别傻乎乎的打开`IDE`折腾.
 ### 4.4 GPU版本
 ```bash
