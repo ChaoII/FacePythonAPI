@@ -36,7 +36,7 @@ face:
   allow_images: [ "jpg", "jpeg", "png", "bmp" ]
 
 index:
-  faiss_threads: 4
+  faiss_threads: 1
   index_method: "HNSW32" # supported: HNSW32, IVF, Flat
   embedding_size: 1024
   top_k: 5

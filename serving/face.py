@@ -3,8 +3,10 @@ import cv2
 import pickle
 import numpy as np
 import os.path as oph
+
 from base.utils import run_time
 from base.log import logger
+from toollib.guid import SnowFlake
 from base.config import settings
 from api.faceapi import SeetaFace
 from models.models import FaceInfo
@@ -18,6 +20,7 @@ class FaceAPI:
         self.FACE_IMAGE_DIR = os.path.join(self.FACE_LIB_DIR, "images")
         self.INDEX_DIR = os.path.join(self.FACE_LIB_DIR, "index")
         self.FACE_LIBS_FILE = os.path.join(self.FACE_LIB_DIR, "facelib.pkl")
+        self.snow = SnowFlake()
         # 初始化项目路径
         self.initial_directory()
         # 初始化人脸特征库对象
@@ -82,44 +85,45 @@ class FaceAPI:
         points = self.seetaFace.mark5(img, face)
         feature = self.seetaFace.Extract(img, points)
         # update face libraries
-        self.FACE_FEATURE_LIBS.update({uid: {"name": name, "feature": self.seetaFace.get_feature_numpy(feature)}})
+        id_ = self.snow.gen_uid()
+        self.FACE_FEATURE_LIBS.update(
+            {id_: {"uid": uid, "name": name, "feature": self.seetaFace.get_feature_numpy(feature)}})
         # 保存并覆盖
         with open(self.FACE_LIBS_FILE, "wb") as f:
             pickle.dump(self.FACE_FEATURE_LIBS, f)
         # ------------------ 重新构建索引-------------------
         self.index_manager.build_index(self.FACE_FEATURE_LIBS)
-        img_url = "/facelib/images/" + uid + ".jpg"
-        img_path = oph.join(self.FACE_IMAGE_DIR, uid + ".jpg")
-        # 判断人脸是否存在，存在
-        face = await FaceInfo.filter(uid=uid).first()
-        if face is None:
-            await FaceInfo.create(uid=uid, name=name, face_path=img_path, face_url=img_url)
-        else:
-            await FaceInfo.filter(uid=uid).update(name=name, face_path=img_path, face_url=img_url)
+        img_url = "/facelib/images/" + str(id_) + ".jpg"
+        img_path = oph.join(self.FACE_IMAGE_DIR, str(id_) + ".jpg")
+
+        await FaceInfo.create(id_=id_, uid=uid, name=name, face_path=img_path, face_url=img_url)
         # 保存照片
         cv2.imwrite(img_path, img)
         return 0
 
     @run_time
     async def delete_face_sub(self, uid: str):
-        face = await FaceInfo.filter(uid=uid).first()
-        if face is not None:
+        faces = await FaceInfo.filter(uid=uid)
+        logger.info(f"当前uid: {uid}人脸数量: {len(faces)}")
+        if faces is not None:
             # 删除数据库记录
             await FaceInfo.filter(uid=uid).delete()
-            # 删除缓存
-            face_info = self.FACE_FEATURE_LIBS.pop(uid)
-            # 删除图片
-            if oph.exists(face.face_url):
-                os.remove(face.face_url)
-            # 保存人脸库
-            with open(self.FACE_LIBS_FILE, "wb") as f:
-                pickle.dump(self.FACE_FEATURE_LIBS, f)
-            # ------------------ 重新构建索引-------------------
-            self.index_manager.build_index(self.FACE_FEATURE_LIBS)
-            logger.info("删除人脸成功, uid: " + uid + "name: " + face_info["name"])
+            for face in faces:
+                id_ = face.id_
+                # 删除缓存
+                face_info = self.FACE_FEATURE_LIBS.pop(id_)
+                # 删除图片
+                if oph.exists(face.face_path):
+                    os.remove(face.face_path)
+                # 保存人脸库
+                with open(self.FACE_LIBS_FILE, "wb") as f:
+                    pickle.dump(self.FACE_FEATURE_LIBS, f)
+                # ------------------ 重新构建索引-------------------
+                self.index_manager.build_index(self.FACE_FEATURE_LIBS)
+                logger.info(f"删除人脸成功,id:{id_},uid: {uid} name: {face_info['name']}")
             return 0
         else:
-            logger.warning("人脸不存在，uid :" + uid)
+            logger.warning(f"人脸不存在，uid :{uid}")
             return -1
 
     @run_time
@@ -157,12 +161,13 @@ class FaceAPI:
         distances, indexs = ret
         # 阈值
         if distances[0][0] > settings.REC_THRESHOLD:
-            uid = str(indexs[0][0])
+            id_ = indexs[0][0]
             # 比如uid为"023"经过索引后变成23这样会找不到id
-            if uid not in self.FACE_FEATURE_LIBS.keys():
+            if id_ not in self.FACE_FEATURE_LIBS.keys():
                 logger.warning("当前人脸不在人脸库中, 人脸库可能出现混乱, 请重新梳理人脸库, 或者人脸id异常，注意：【人脸id必须是整形，并且，不能是以0开头】")
                 return -1
-            name = self.FACE_FEATURE_LIBS[uid]["name"]
+            name = self.FACE_FEATURE_LIBS[id_]["name"]
+            uid = self.FACE_FEATURE_LIBS[id_]["uid"]
             return uid, name
         else:
             logger.warning("当前人脸不在人脸库中")

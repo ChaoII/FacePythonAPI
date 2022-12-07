@@ -6,7 +6,8 @@ from tortoise.contrib.pydantic import pydantic_model_creator
 
 class FaceInfo(Model):
     table = "face_info"
-    uid = fields.CharField(max_length=255, primary_key=True, index=True, description='用户id来自于其它管控系统')
+    id_ = fields.IntField(pk=True, index=True, description="系统生成的id，长整型")
+    uid = fields.CharField(max_length=255, index=True, description='用户id来自于其它管控系统')
     name = fields.CharField(max_length=255, index=True, description='姓名')
     face_path = fields.CharField(max_length=255, index=True, description='人脸图片所在路径')
     face_url = fields.CharField(max_length=255, index=False, description="人脸所在静态文件路(url)")
@@ -24,6 +25,7 @@ class FaceInfo(Model):
         return data
 
 
+# 可以和pydanic配合使用
 User_orm = pydantic_model_creator(FaceInfo, name="FaceInfo")  # ORM 推荐的用法 配合fastapi 的模型
 
 if __name__ == '__main__':

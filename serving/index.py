@@ -29,9 +29,9 @@ class IndexManager:
     def _get_features_ids(libs: dict):
         features = None
         ids = []
-        for uid in libs.keys():
-            ids.append(uid)
-            feature: np.ndarray = libs[uid]["feature"]
+        for id_ in libs.keys():
+            ids.append(id_)
+            feature: np.ndarray = libs[id_]["feature"]
             feature = feature.reshape((-1, feature.size))
             features = feature if features is None else np.concatenate([features, feature], axis=0)
         return features, np.array(ids).astype("int64")
