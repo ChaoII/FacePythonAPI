@@ -5,10 +5,12 @@ RUN apt-get update && apt-get install python3 -y && apt-get install python3-pip 
 RUN pip install -r ./requirements.txt
 
 FROM ubuntu:20.04
-RUN apt-get update && apt-get install python3 -y && apt-get install libomp
-RUN echo /opt/serving/lib > /etc/ld.so.conf.d/faceapi.conf
+RUN apt-get update && apt-get install python3 -y && apt-get install libgomp1
+RUN echo /opt/serving/lib > /etc/ld.so.conf.d/faceapi.conf && ldconfig
 COPY --from=build /usr/local/lib/python3.8/dist-packages /usr/local/lib/python3.8/dist-packages
-VOLUME [".","/opt/serving"]
+VOLUME ["/Users/aichao/Desktop/serving","/opt/serving"]
 WORKDIR /opt/serving
 ENV PYTHONPATH=/usr/local/lib/python3.8/dist-packages
-CMD ["python3 run.py"]
+EXPOSE 9026
+#CMD ["/bin/bash"]
+CMD ["python3","run.py"]
