@@ -1,15 +1,14 @@
-FROM python:3.9-buster as builder-image
+FROM ubuntu:20.04 AS build
+WORKDIR /app
+COPY ./requirements.txt /app
+RUN apt-get update && apt-get install python3 -y && apt-get install python3-pip -y && pip install --upgrade pip
+RUN pip install -r ./requirements.txt
 
-### install requirements
-COPY requirements.txt .
-RUN pip3 install --no-cache-dir -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple
-
-
-FROM python:3.9-slim-buster
-
-COPY --from=builder-image /usr/local/bin /usr/local/bin
-COPY --from=builder-image /usr/local/lib/python3.9/site-packages /usr/local/lib/python3.9/site-packages
-
-WORKDIR /opt/code
-
-COPY . .
+FROM ubuntu:20.04
+RUN apt-get update && apt-get install python3 -y && apt-get install libomp
+RUN echo /opt/serving/lib > /etc/ld.so.conf.d/faceapi.conf
+COPY --from=build /usr/local/lib/python3.8/dist-packages /usr/local/lib/python3.8/dist-packages
+VOLUME [".","/opt/serving"]
+WORKDIR /opt/serving
+ENV PYTHONPATH=/usr/local/lib/python3.8/dist-packages
+CMD ["python3 run.py"]
