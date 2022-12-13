@@ -15,7 +15,7 @@ pip install -r requirements.txt
 
 1. 需要确保目录下lib文件有对应平台的库，比如mac下./lib/mac/*.dylib
 2. 确保model文件夹下有模型文件，比如：./model/*.csta
-3. 如果没有除了可以手动添加外，也提供了自动化脚本方式 编译源码，编译方式见首页[源码编译](../README.md)
+3. 如果没有除了可以手动添加外，也提供了自动化脚本方式 编译源码，编译方式见首页[源码编译](../README_CN.md)
 4. 进入`cd FacePythonAPI/serving/script/`，执行`python copy_libs.py`,注意必须进入脚本目录，不然执行copy操作后，会显示路径错误
 
 #### 1.2 运行
