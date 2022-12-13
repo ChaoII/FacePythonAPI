@@ -1,8 +1,11 @@
+English | [简体中文](README_CN.md)
+
 # **人脸识别综合应用**
 
 ## 1. 简介
 
 项目基于`SeetaFace6Open`，分发不同使用场景：
+
 - 提供基于`cuda`编译的`tennis`前向推理引擎库（`windows`，`cuda11.2`）；
 - 根据`pybind11`进行`python`接口封装，使用面向对象的方式，让接口更加自然合理，使用更加便捷 ；
 - 封装的进行`extern C` 的纯`C`封装方式，并使用`ctypes`调用提供`python`接口，解除不同版本`python`使用上的限制，使用简便，性能与原始c++模块基本一致，基于C，支持更多语言拓展；
@@ -13,66 +16,99 @@
 ## 2.下载模型（已下载则忽略）
 
 [点击查看下载模型](./model/README.md)
+
 ## 3. SeetaFace6预编译库下载
-本项目已经提供了预编译库，包含`windows|linux|macos`(均为`x86_64CPU`架构，其它架构请自行编译)，其中`windows`下提供`GPU`编译库，由于系统差异巨大导致的二进制文件无法使用，请进行源码编译，编译详情参考[SeetaFace6Open](https://github.com/SeetaFace6Open/index)。
+
+本项目已经提供了预编译库，包含`windows|linux|macos`(均为`x86_64CPU`架构，其它架构请自行编译)，其中`windows`下提供`GPU`
+编译库，由于系统差异巨大导致的二进制文件无法使用，请进行源码编译，编译详情参考[SeetaFace6Open](https://github.com/SeetaFace6Open/index)。
+
 ## 4. 源码编译
+
 ### 4.1 基础环境
+
 - CMake
 - 各平台的编译工具
 - 具体安装方式不在本文档的说明范畴内
+
 ### 4.2 拉取源码
+
 ```bash
 git clone --recursive https://github.com/ChaoII/FacePythonAPI.git
 ```
+
 仓库包含部分二进制文件，可能比较大，如果拉不下来，请自行百度
 其中`--recursive`可以同步拉取子模块
+
 ### 4.3 CPU版本编译
+
 其中项目`CPU`、`GPU`主要依赖于`tennis`引擎，但是选择不同的编译方式可以自动的进行库的选择，并添加`cuda`路径配置
+
 ```bash
 cmake .. -G "visual studio 16 2019" -DUSE_SPDLOG=ON
 cmake --build . --config Release --target FaceAPI -j4
 ```
+
 其中`cmake ..`后面可跟`-G`参数指定生成器，如果不会请自行参考百度，-DUSE_SPDLOG=ON,使用sdk使用spdlog日志库，但是库体积会变大，请自行衡量</br>
 **注意 :** `windows`上如果是`MSVC`请打开`VS`开发命令提示符，执行上述命令，别傻乎乎的打开`IDE`折腾.
+
 ### 4.4 GPU版本
+
 ```bash
 cmake .. -DBUILD_WITH_GPU=ON -DCUDA_DIR="xxx"
 cmake --build . --config Release --target FaceAPI -j4
 ```
+
 最终编译得到`FaceAPI.dll(windows) | libFaceAPI.so(linux) | libFaceAPI.dylib(MacOS)`
+
 ## 5. 基础运行
 
 ### 5.1  确认硬件基础
+
 1. 确认`CPU`以及操作系统为`64`位
 2. 下载`cpu-z`或者其它软件查看`CPU`是否支持 `AVX | SSE | FMA`
 3. 确认机器是够装有`NVIDIA`显卡，并且已经安装好`CUDA`和对应`CUDNN`（提供`11.x`的`GPU`库，如果不同请往上看自行编译）
+
 ****
 如果：
+
 - 条件***1***不满足，或者操作系统比较古老，请自行编译
 - 条件***2***不满足，请将仓库中`third/seeta/lib/{你的平台}/tennis_pentium.xx`改成`tennis.xx`(因为奔腾`CPU`不支持`AVX`指令集)
 - 条件***3***不满足，请老老实实用`CPU`去玩
+
 ### 5.2依赖安装
+
 既然人脸识别属于视觉范畴，所以不得不准备`opencv-python`库，其安装方式为：
+
 ```bash
 pip install -i https://pypi.tuna.tsinghua.edu.cn/simple opencv-python
 # 部分机器存在问题，可能是图形截面导致的，可以安装headless类型opencv
 pip install -i https://pypi.tuna.tsinghua.edu.cn/simple opencv-python-headless
 ```
+
 ### 5.3 库路径设置
+
 由于编译文件依赖于第三方的库，需要将第三方库放置于环境变量中（非`windows`）
 `linux/macos`需要添加库路径
+
 - 临时
+
 ```bash
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:${seetaFace6Python目录路径}/seetaface/lib/linux
 ``` 
+
 - 永久
+
 ```shell script
 sudo echo  ${编译目录}/lib/linux  > /etc/ld.so.conf.d/facepythonapi.conf
 sudo ldconfig    
 ``` 
+
 `windows`下将依赖库文件放在与编译生成的`FaceAPI.dll`同目录即可
+
 ### 5.4 示例代码
+
 部分代码如下（想看更详细使用方式,，请查看[serving 使用方式](./serving/README.md)或者查看`api.py`文档）：
+
 ```python
 import os
 import cv2
