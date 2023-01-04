@@ -12,6 +12,8 @@ base:
     - "*"
   port: 9026
   workers: 1
+  ssl_keyfile: ""
+  ssl_certfile: ""
 
 face:
   rec_threshold: 0.7

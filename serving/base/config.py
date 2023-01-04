@@ -47,6 +47,8 @@ class Settings:
     LOG_LEVEL = "DEBUG" if _base["debug"] else "INFO"
     PORT = _base["port"]
     WORKERS = _base["workers"]
+    KEY_FILE = _base["ssl_keyfile"]
+    CERT_FILE = _base["ssl_certfile"]
     # face
     REC_THRESHOLD = _face["rec_threshold"]
     IS_ANTI_SPOOF = _face["is_anti_spoof"]

@@ -22,7 +22,6 @@ pip install -r requirements.txt
 
 ```bash
 python run.py
-bash
 ```
 
 其中交互式文档请访问：

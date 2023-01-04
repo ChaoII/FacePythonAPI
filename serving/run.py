@@ -8,4 +8,9 @@ if __name__ == "__main__":
     if platform.system().lower() == "windows":
         multiprocessing.freeze_support()
 
-    uvicorn.run("main:app", host="0.0.0.0", port=settings.PORT, workers=settings.WORKERS)
+    uvicorn.run("main:app",
+                host="0.0.0.0",
+                port=settings.PORT,
+                workers=settings.WORKERS,
+                ssl_keyfile=settings.KEY_FILE,
+                ssl_certfile=settings.CERT_FILE)
