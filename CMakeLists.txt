@@ -24,9 +24,9 @@ if (USE_SPDLOG)
     include_directories(${CMAKE_CURRENT_SOURCE_DIR}/third/spdlog/include)
 endif ()
 
-find_package(OpenMP)
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${OpenMP_C_FLAGS}")
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS}")
+#find_package(OpenMP)
+#set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${OpenMP_C_FLAGS}")
+#set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS}")
 
 #添加动态库搜索文件
 set(DEPEND_LIBS "")
