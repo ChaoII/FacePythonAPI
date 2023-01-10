@@ -48,19 +48,19 @@ async def shutdown_event():
 @limiter.limit("5/second")
 async def register_face(request: Request, face_info: FaceInfoIn):
     uid = face_info.uid
-    try:
-        uid_ = int(uid)
-        if str(uid_) != uid:
-            return {"code": -1, "data": {"uid": uid}, "msg": "uid 必须是可以转化为整形的值，并且首位不能为0"}
-    except ValueError as e:
-        return {"code": -1, "data": {"uid": uid}, "msg": "uid 必须是可以转化为整形的值，并且首位不能为0"}
     name = face_info.name
-    img = base64_to_image(face_info.image)
-    ret = await face_api.register_face_sub(img, uid, name)
-    if ret == 0:
+    error_index = []
+    for index, img_str in enumerate(face_info.images):
+        if not isinstance(img_str, str):
+            return {"code": -1, "data": {"uid": uid, "name": name}, "msg": "人脸数据必须是base64字符串"}
+        img = base64_to_image(img_str)
+        ret = await face_api.register_face_sub(img, uid, name)
+        if ret == -1:
+            error_index.append(index)
+    if len(error_index) == 0:
         return {"code": 0, "data": {"uid": uid, "name": name}, "msg": "注册人脸成功!"}
     else:
-        return {"code": -1, "data": {"uid": uid, "name": name}, "msg": "注册人脸失败！"}
+        return {"code": -1, "data": {"uid": uid, "name": name}, "msg": f"图像{error_index}注册失败！"}
 
 
 @app.delete("/delete_face")

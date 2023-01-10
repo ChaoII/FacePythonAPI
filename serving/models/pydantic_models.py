@@ -1,7 +1,8 @@
 from pydantic import BaseModel
+from typing import  List
 
 
 class FaceInfoIn(BaseModel):
     uid: str
     name: str
-    image: str
+    images: List[str]
