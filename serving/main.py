@@ -49,6 +49,8 @@ async def shutdown_event():
 async def register_face(request: Request, face_info: FaceInfoIn):
     uid = face_info.uid
     name = face_info.name
+    # 注册人脸时，先删除已存在的人脸
+    await face_api.delete_face_sub(uid)
     error_index = []
     for index, img_str in enumerate(face_info.images):
         if not isinstance(img_str, str):
@@ -60,7 +62,7 @@ async def register_face(request: Request, face_info: FaceInfoIn):
     if len(error_index) == 0:
         return {"code": 0, "data": {"uid": uid, "name": name}, "msg": "注册人脸成功!"}
     else:
-        return {"code": -1, "data": {"uid": uid, "name": name}, "msg": f"图像{error_index}注册失败！"}
+        return {"code": -1, "data": {"uid": uid, "name": name}, "msg": f"图像{error_index}注册失败,请确认是正确的base64字符串"}
 
 
 @app.delete("/delete_face")
@@ -82,7 +84,7 @@ async def face_recognize(request: Request, image: str = Body(..., embed=True, al
     ret = face_api.face_recognize_sub(image)
 
     if ret is None:
-        return {"code": -1, "data": {}, "msg": "未知异常! 请确认人脸完全在人脸遮罩内", }
+        return {"code": -1, "data": {}, "msg": "未知异常! 请确认人脸完全在人脸遮罩内"}
     if ret == -1:
         return {"code": -1, "data": {},
                 "msg": "人脸识别失败，请准确将人脸置于指定区域，或人脸不在人脸库中"}
