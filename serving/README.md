@@ -19,24 +19,24 @@ pip install -r requirements.txt
 4. 进入`cd FacePythonAPI/serving/script/`，执行`python copy_libs.py`,注意必须进入脚本目录，不然执行copy操作后，会显示路径错误
 
 #### 1.2 https证书
-如果需要开启`https`需要设置证书和秘钥，租用公有云服务器，会免费提供对应的证书秘钥，档案也可以根据`openSSL`生成证书秘钥，但是浏览器会显示**不安全访问**  
+如果需要开启`https`需要设置证书和秘钥，租用公有云服务器，会免费提供对应的证书秘钥。对于私有化部署也可以根据`OpenSSL`生成证书秘钥，但是浏览器会显示**不安全访问**  
 `OpenSSL`生成秘钥方式：
-- 生成`rsa`私钥，`des3`算法，`2048`位强度，`ssl.key`是秘钥文件名。强烈建议密钥长度大于等于2048
+1. 生成`rsa`私钥，`des3`算法，`2048`位强度，`ssl.key`是秘钥文件名。强烈建议密钥长度大于等于2048
 ```bash
 openssl genrsa -des3 -out ssl.key 2048
 ```
-- 输入密码,这里会输入两次. 填写一样即可. 随意填写一个. 下一步就会删除这个密码
-- 终端执行删除密码命令，这里目录和生成私钥的目录一致
+2. 输入密码,这里会输入两次，填写一样即可，随意填写一个即可，下一步就会删除这个密码
+3. 终端执行删除密码命令，这里目录和生成私钥的目录一致
 ```bash
 openssl rsa -in ssl.key -out ssl.key
 ```
-- 生成`CSR`（证书签名请求），根据根据刚刚生成的key文件来生成证书请求文件，终端执行如下命令:
+4. 生成`CSR`（证书签名请求），根据根据刚刚生成的key文件来生成证书请求文件，终端执行如下命令:
 ```bash
 openssl req -new -key ssl.key -out ssl.csr
 ```
-**说明**: 执行以上命令后，需要依次输入国家、地区、城市、组织、组织单位、`Common Name`、`Email`和密码。其中`Common Name`应该与域名保持一致。密码我们已经删掉了,直接回车即可
+**说明**: 执行以上命令后，需要依次输入国家、地区、城市、组织、组织单位、`Common Name`、`Email`和密码。其中`Common Name`应该与域名保持一致。密码我们已经删掉了,直接回车即可  
 **温馨提示**: `Common Name`就是证书对应的域名地址. 我们开发微信小程序时必须要让我们的外链的`https`的域名和证书统一才行
-- 生成自签名证书
+5. 生成自签名证书
 根据以上2个文件生成crt证书文件，终端执行下面命令：
 ```bash
 #3650是证书有效期(单位：天)。这个大家随意。最后使用到的文件是key和crt文件。
@@ -53,16 +53,16 @@ python run.py
 ```
 
 #### 1.4 docker 运行方式
-- 已经制作好[docker镜像](https://pan.baidu.com/s/1RzWgLD1OpK7Tt86BgR81xg?pwd=rtrg)，可直接下载并解压
+1. 已经制作好[docker镜像](https://pan.baidu.com/s/1RzWgLD1OpK7Tt86BgR81xg?pwd=rtrg)，可直接下载并解压
 ```bash
 # 生成faceapi-v3.0.tar
 unzip faceapi-v3.0.tar.zip
 ```
-- 导入镜像
+2. 导入镜像
 ```bash
 docker import faceapi-v3.0.tar faceapi:v3.0
 ```
-- 运行镜像
+3. 运行镜像
 ```bash
 docker run -itd --name faceapi --restart=always -v ${work_path}/serving:/opt/serving -w /opt/serving -p 9026:9026 faceapi:v3.0 python3 run.py
 ```
