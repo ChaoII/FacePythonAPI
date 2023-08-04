@@ -53,14 +53,14 @@ python run.py
 ```
 
 #### 1.4 docker 运行方式
-1. 已经制作好[docker镜像](https://pan.baidu.com/s/1RzWgLD1OpK7Tt86BgR81xg?pwd=rtrg)，可直接下载并解压
+1. 已经制作好[docker镜像](https://pan.baidu.com/s/1fBzjWm-WlO3DCyTy5wqwpQ?pwd=e54n)，可直接下载并解压
 ```bash
-# 生成faceapi-v3.0.tar
-unzip faceapi-v3.0.tar.zip
+# 生成faceapi.tar
+unzip faceapi.zip
 ```
 2. 导入镜像
 ```bash
-docker import faceapi-v3.0.tar faceapi:v3.0
+docker import faceapi.tar faceapi:v3.0
 ```
 3. 运行镜像
 ```bash
