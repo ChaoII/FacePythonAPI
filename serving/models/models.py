@@ -35,7 +35,7 @@ if __name__ == '__main__':
 
     async def init():
         await Tortoise.init(
-            db_url=settings.db_url,  #
+            db_url=settings.DB_URL,  #
             modules={'models': ['models']}
         )
         await Tortoise.generate_schemas()  # 创建数据库表

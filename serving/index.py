@@ -37,8 +37,12 @@ class IndexManager:
         return features, np.array(ids).astype("int64")
 
     def build_index(self, libs: dict):
+        if not libs:
+            logger.warning("facelib cache is empty")
+            return
         if self.index_method.lower() not in ['hnsw32', 'ivf', 'flat']:
-            return "The index method Only support: HNSW32, IVF, Flat"
+            logger.error("The index method Only support: HNSW32, IVF, Flat")
+            return
         features, ids = self._get_features_ids(libs)
         # generate index
         if self.index_method == "IVF":
