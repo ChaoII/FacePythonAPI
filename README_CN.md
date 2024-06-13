@@ -81,7 +81,7 @@ cmake --build . --config Release --target FaceAPI -j4
 
 ```bash
 pip install -i https://pypi.tuna.tsinghua.edu.cn/simple opencv-python
-# 部分机器存在问题，可能是图形截面导致的，可以安装headless类型opencv
+# 部分机器存在问题，可能是图形界面导致的，可以安装headless类型opencv
 pip install -i https://pypi.tuna.tsinghua.edu.cn/simple opencv-python-headless
 ```
 

@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include <iostream>
 #include <sstream>
@@ -28,10 +28,10 @@
 
 #endif
 enum LOG_LEVEL {
-    DEBUG,
-    INFO,
-    WARNING,
-    ERROR
+    LOG_DEBUG,
+    LOG_INFO,
+    LOG_WARNING,
+    LOG_ERROR
 };
 
 class FACEAPI FRLogger {
@@ -39,11 +39,11 @@ public:
     FRLogger() {
         line_ = "";
         prefix_ = "[FR]";
-        log_level_ = LOG_LEVEL::INFO;
+        log_level_ = LOG_LEVEL::LOG_INFO;
     }
 
     explicit FRLogger(LOG_LEVEL log_level, const std::string &prefix = "[FR]",
-                      LOG_LEVEL activate_level = LOG_LEVEL::INFO);
+                      LOG_LEVEL activate_level = LOG_LEVEL::LOG_INFO);
 
     template<typename T>
     FRLogger &operator<<(const T &val) {
