@@ -15,8 +15,7 @@
 
 
 #ifdef _WIN32
-//strrchr:查找字符在指定字符串从右面开始的第一次出现的位置，如果成功，返回该字符以及后面的字符，如果失败，返回NULL
-//strcgr:查找字符在指定字符串首次出现的位置
+
 #define __FILENAME__ (strrchr(__FILE__,'\\')?(strrchr(__FILE__,'\\')+1):__FILE__)
 #else
 #define __FILENAME__ (strrchr(__FILE__,'/')?(strrchr(__FILE__,'/')+1):__FILE__)
@@ -71,19 +70,19 @@ private:
 
 
 #define FRERROR                                                \
-  FRLogger(LOG_LEVEL::ERROR, "[ERROR]") << __FILENAME__ << "(" << __LINE__ \
+  FRLogger(LOG_LEVEL::LOG_ERROR, "[ERROR]") << __FILENAME__ << "(" << __LINE__ \
                             << ")::" << __FUNCTION__ << "\t|"
 
 #define FRWARNING                                                \
-  FRLogger(LOG_LEVEL::WARNING,"[WARNING]") << __FILENAME__ << "(" << __LINE__ \
+  FRLogger(LOG_LEVEL::LOG_WARNING,"[WARNING]") << __FILENAME__ << "(" << __LINE__ \
                               << ")::" << __FUNCTION__ << "\t|"
 
 #define FRINFO                                                \
-  FRLogger(LOG_LEVEL::INFO,"[INFO]") << __FILENAME__ << "(" << __LINE__ \
+  FRLogger(LOG_LEVEL::LOG_INFO,"[INFO]") << __FILENAME__ << "(" << __LINE__ \
                            << ")::" << __FUNCTION__ << "\t|"
 
 #define FRDEBUG                                                \
-  FRLogger(true, LOG_LEVEL::DEBUG,"[DEBUG]") << __FILENAME__ << "(" << __LINE__ \
+  FRLogger(true, LOG_LEVEL::LOG_DEBUG,"[DEBUG]") << __FILENAME__ << "(" << __LINE__ \
                            << ")::" << __FUNCTION__ << "\t|"
 
 #define RRASSERT(condition, format, ...)                        \

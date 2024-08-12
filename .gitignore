@@ -28,3 +28,7 @@ python/build
 python/dist
 python/ttt.py
 python/config.yml
+serving/run.build
+serving/run.dist
+serving/run.onefile-build
+serving/run.dist.zip

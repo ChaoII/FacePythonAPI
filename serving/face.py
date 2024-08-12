@@ -164,7 +164,7 @@ class FaceAPI:
             id_ = indexs[0][0]
             # 比如uid为"023"经过索引后变成23这样会找不到id
             if id_ not in self.FACE_FEATURE_LIBS.keys():
-                logger.warning("当前人脸不在人脸库中, 人脸库可能出现混乱, 请重新梳理人脸库, 或者人脸id异常，注意：【人脸id必须是整形，并且，不能是以0开头】")
+                logger.warning("当前人脸不在人脸库中, 人脸库可能出现混乱, 请重新梳理人脸库, 或者人脸id异常，注意：【人脸id必须是整型，并且，不能是以0开头】")
                 return -1
             name = self.FACE_FEATURE_LIBS[id_]["name"]
             uid = self.FACE_FEATURE_LIBS[id_]["uid"]

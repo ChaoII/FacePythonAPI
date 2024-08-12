@@ -74,6 +74,29 @@ docker run -itd --name faceapi --restart=always -v ${work_path}/serving:/opt/ser
 # 如果开启https请将http改为https
 http://ip:port/docs
 ```
+4. 项目打包
+
+在无法安装`docker`的环境中，可以将代码进行打包，打包后直接运行`run.exe`即可，具体打包步骤为：
+
+- 安装nuitka
+```bash
+pip install nuitka
+```
+- 执行打包
+```bash
+# 在server目录下执行
+python -m nuitka python -m nuitka --lto=no --standalone run.py --include-module=main,tortoise.backends.sqlite,tortoise.converters --include-package=sqlite3,aiosqlite
+```
+- 拷贝依赖配置文件及目录
+```bash
+cp config.yaml run.dist
+cp -r lib run.dist
+cp -r model run.dist
+cp -r models run.dist
+cp -r static run.dist
+cp -r {PYTHON_PATH}/site-package/limit run.dist
+```
+- 运行run.exe 即可正常执行
 
 API文档请访问
 ```bash
