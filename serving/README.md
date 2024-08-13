@@ -85,7 +85,7 @@ pip install nuitka
 - 执行打包
 ```bash
 # 在server目录下执行
-python -m nuitka python -m nuitka --lto=no --standalone run.py --include-module=main,tortoise.backends.sqlite,tortoise.converters --include-package=sqlite3,aiosqlite
+python -m nuitka --lto=no --standalone run.py --include-module=main,tortoise.backends.sqlite,tortoise.converters --include-package=sqlite3,aiosqlite
 ```
 - 拷贝依赖配置文件及目录
 ```bash
